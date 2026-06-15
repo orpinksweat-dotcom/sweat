@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Sweat Dashboard</title>
+<style>
+:root{--bg:#0f0f0f;--bg2:#181818;--bg3:#252525;--bd:rgba(255,255,255,.09);--bd2:rgba(255,255,255,.15);--tx:#f0f0f0;--tx2:#aaa;--tx3:#666;--gr:#22c55e;--grd:rgba(34,197,94,.13);--rd:#ef4444;--rdd:rgba(239,68,68,.13);--am:#f59e0b;--amd:rgba(245,158,11,.13);--bl:#3b82f6;--bld:rgba(59,130,246,.13);--pu:#a855f7;--pud:rgba(168,85,247,.13);}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--tx);font-family:-apple-system,'Segoe UI',Arial,sans-serif;font-size:13px;min-height:100vh;}
+nav{background:var(--bg2);border-bottom:1px solid var(--bd);padding:0 14px;display:flex;align-items:center;gap:3px;height:48px;position:sticky;top:0;z-index:100;overflow-x:auto;-webkit-overflow-scrolling:touch;}
+.logo{font-size:13px;font-weight:700;color:var(--gr);margin-left:10px;white-space:nowrap;flex-shrink:0;}
+.logo span{color:var(--tx2);font-weight:400;}
+button.tab{padding:5px 10px;border-radius:6px;border:none;background:transparent;color:var(--tx2);cursor:pointer;font-size:11px;white-space:nowrap;flex-shrink:0;font-family:inherit;}
+button.tab:hover{background:var(--bg3);color:var(--tx);}
+button.tab.on{background:var(--grd);color:var(--gr);font-weight:600;}
+.nr{margin-right:auto;display:flex;align-items:center;gap:5px;flex-shrink:0;}
+.dot{width:6px;height:6px;border-radius:50%;background:var(--gr);animation:pu 2s infinite;}
+@keyframes pu{0%,100%{opacity:1}50%{opacity:.3}}
+.lup{font-size:10px;color:var(--tx3);}
+main{padding:14px;max-width:1100px;margin:0 auto;}
+.page{display:none;}.page.on{display:block;}
+.filt{background:var(--bg3);border-radius:8px;padding:9px 12px;margin-bottom:12px;display:flex;align-items:center;gap:7px;flex-wrap:wrap;}
+.fl{font-size:11px;color:var(--tx3);white-space:nowrap;}
+select{font-size:11px;padding:4px 7px;border-radius:6px;border:1px solid var(--bd2);background:var(--bg2);color:var(--tx);cursor:pointer;font-family:inherit;}
+button.qb{font-size:11px;padding:3px 9px;border-radius:20px;border:1px solid var(--bd);background:transparent;color:var(--tx2);cursor:pointer;font-family:inherit;}
+button.qb:hover{color:var(--tx);border-color:var(--bd2);}
+button.qb.on{background:var(--grd);color:var(--gr);border-color:rgba(34,197,94,.3);}
+.g4{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:12px;}
+.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px;}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px;}
+@media(max-width:600px){.g4{grid-template-columns:1fr 1fr;}.g3{grid-template-columns:1fr 1fr;}.g2{grid-template-columns:1fr;}}
+.kpi{background:var(--bg2);border:1px solid var(--bd);border-radius:10px;padding:12px 14px;}
+.kl{font-size:10px;color:var(--tx2);margin-bottom:4px;}
+.kv{font-size:20px;font-weight:700;}
+.ks{font-size:10px;color:var(--tx3);margin-top:3px;}
+.kg{color:var(--gr);}.kr{color:var(--rd);}.ka{color:var(--am);}.kb{color:var(--bl);}
+.card{background:var(--bg2);border:1px solid var(--bd);border-radius:12px;padding:13px;margin-bottom:12px;}
+.ct{font-size:12px;font-weight:600;color:var(--tx);margin-bottom:11px;}
+table{width:100%;border-collapse:collapse;font-size:11px;}
+th{text-align:right;padding:6px 6px;color:var(--tx3);border-bottom:1px solid var(--bd);font-weight:500;white-space:nowrap;}
+td{padding:6px 6px;border-bottom:1px solid var(--bd);color:var(--tx);}
+tr:last-child td{border-bottom:none;}
+.tc{text-align:center;}
+tfoot td{background:var(--bg3)!important;font-weight:700;border-top:1px solid var(--bd2);}
+.pill{display:inline-flex;font-size:10px;padding:2px 6px;border-radius:20px;font-weight:600;}
+.pg{background:var(--grd);color:var(--gr);}.pr{background:var(--rdd);color:var(--rd);}.pa{background:var(--amd);color:var(--am);}.pb{background:var(--bld);color:var(--bl);}.pp{background:var(--pud);color:var(--pu);}
+.br{display:flex;align-items:center;gap:7px;margin-bottom:7px;}
+.bl2{font-size:11px;color:var(--tx2);width:140px;flex-shrink:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.bt{flex:1;height:6px;background:var(--bg3);border-radius:3px;overflow:hidden;}
+.bf{height:100%;border-radius:3px;}
+.bv{font-size:11px;font-weight:600;width:95px;text-align:left;flex-shrink:0;}
+.funnel{display:flex;align-items:stretch;margin-bottom:12px;border-radius:8px;overflow:hidden;}
+.fs{flex:1;text-align:center;padding:12px 4px;}
+.fn{font-size:18px;font-weight:700;}
+.fa{font-size:9px;margin-top:3px;line-height:1.4;}
+.farr{font-size:14px;color:var(--tx3);display:flex;align-items:center;flex-shrink:0;padding:0 1px;}
+.insight{background:rgba(34,197,94,.05);border-right:3px solid var(--gr);border-radius:0 8px 8px 0;padding:9px 12px;font-size:11px;color:var(--tx2);line-height:1.7;margin-top:9px;}
+.warn{background:rgba(245,158,11,.06);border-right:3px solid var(--am);border-radius:0 8px 8px 0;padding:9px 12px;font-size:11px;color:var(--am);line-height:1.7;margin-top:9px;}
+.danger{background:var(--rdd);border-right:3px solid var(--rd);border-radius:0 8px 8px 0;padding:9px 12px;font-size:11px;color:var(--rd);line-height:1.7;margin-top:9px;}
+.note{font-size:10px;color:var(--tx3);background:var(--bg3);border-radius:6px;padding:6px 10px;margin-bottom:10px;line-height:1.6;}
+</style>
+</head>
+<body>
+<nav>
+  <div class="logo">&#128170; &#1505;&#1493;&#1493;&#1488;&#1496; &#1512;&#1506;&#1504;&#1504;&#1492; <span>| &#1489;&#1506;&#1500;&#1497;&#1501;</span></div>
+  <button class="tab on" onclick="showTab('rev',this)">&#128178; &#1492;&#1499;&#1504;&#1505;&#1493;&#1514;</button>
+  <button class="tab" onclick="showTab('subs',this)">&#128203; &#1502;&#1504;&#1493;&#1497;&#1497;&#1501;</button>
+  <button class="tab" onclick="showTab('conv',this)">&#127919; &#1492;&#1502;&#1512;&#1493;&#1514;</button>
+  <button class="tab" onclick="showTab('clients',this)">&#128101; &#1500;&#1511;&#1493;&#1495;&#1493;&#1514;</button>
+  <button class="tab" onclick="showTab('mov',this)">&#127760; &#1502;&#1493;&#1489;&#1502;&#1504;&#1496;</button>
+  <button class="tab" onclick="showTab('leads',this)">&#128236; &#1500;&#1497;&#1491;&#1497;&#1501;</button>
+  <button class="tab" onclick="showTab('occ',this)">&#128200; &#1514;&#1508;&#1493;&#1505;&#1492;</button>
+  <button class="tab" onclick="showTab('profit',this)">&#128202; &#1512;&#1493;&#1493;&#1495;</button>
+  <div class="nr"><div class="dot"></div><span class="lup">&#1502;&#1488;&#1497; 2026</span></div>
+</nav>
+<main>
+
+<div id="p-rev" class="page on">
+<div class="note">&#128161; &#1492;&#1499;&#1504;&#1505;&#1492; = &#1497;&#1491;&#1504;&#1497; (&#1489;&#1497;&#1496;/&#1508;&#1497;&#1497;&#1489;&#1493;&#1511;&#1505;/&#1492;&#1506;&#1489;&#1512;&#1492; &#1499;&#1493;&#1500;&#1500; &#1502;&#1493;&#1489;+&#1508;&#1512;&#1497;&#1508;&#1497;&#1496;) + Boostapp. &#1502;&#1493;&#1489; &#1493;&#1508;&#1512;&#1497;&#1508;&#1497;&#1496; &#1492;&#1501; &#1514;&#1514;-&#1508;&#1497;&#1512;&#1493;&#1496; &#1489;&#1514;&#1493;&#1498; &#1492;&#1497;&#1491;&#1504;&#1497;, &#1500;&#1488; &#1504;&#1493;&#1505;&#1508;&#1497;&#1501;.</div>
+<div class="filt">
+  <span class="fl">&#1514;&#1511;&#1493;&#1508;&#1492;:</span>
+  <button class="qb on" onclick="rp('all',this)">&#1492;&#1499;&#1500;</button>
+  <button class="qb" onclick="rp('2025',this)">2025</button>
+  <button class="qb" onclick="rp('2026',this)">2026</button>
+  <span class="fl">|</span>
+  <span class="fl">&#1514;&#1510;&#1493;&#1490;&#1492;:</span>
+  <select id="rsrc" onchange="renderRev()">
+    <option value="all">&#1492;&#1499;&#1500;</option>
+    <option value="boost">Boostapp &#1489;&#1500;&#1489;&#1491;</option>
+    <option value="manual">&#1497;&#1491;&#1504;&#1497; &#1489;&#1500;&#1489;&#1491;</option>
+  </select>
+</div>
+<div class="g4" id="r-kpis"></div>
+<div class="card">
+  <div class="ct">&#128203; &#1492;&#1499;&#1504;&#1505;&#1493;&#1514; &#1495;&#1493;&#1491;&#1513;&#1497;&#1493;&#1514;</div>
+  <div style="overflow-x:auto">
+  <table>
+    <thead><tr>
+      <th>&#1495;&#1493;&#1491;&#1513;</th>
+      <th class="tc">&#1497;&#1491;&#1504;&#1497;</th>
+      <th class="tc">&#1502;&#1493;&#1489;+&#1508;&#1512;&#1497;&#1508;&#1497;&#1496; (&#1502;&#1514;&#1493;&#1498; &#1497;&#1491;&#1504;&#1497;)</th>
+      <th class="tc">Boostapp</th>
+      <th class="tc">&#1505;&#1492;"&#1499;</th>
+      <th class="tc">&#1502;&#1490;&#1502;&#1492;</th>
+    </tr></thead>
+    <tbody id="r-tbody"></tbody>
+    <tfoot id="r-tfoot"></tfoot>
+  </table>
+  </div>
+  <div class="insight" id="r-insight"></div>
+</div>
+<div class="card">
+  <div class="ct">&#128202; &#1508;&#1497;&#1500;&#1493;&#1495; &#1502;&#1511;&#1493;&#1512;&#1493;&#1514;</div>
+  <div id="r-bars"></div>
+</div>
+</div>
+
+<div id="p-subs" class="page">
+<div class="filt">
+  <span class="fl">&#1514;&#1511;&#1493;&#1508;&#1492;:</span>
+  <button class="qb on" onclick="sp('all',this)">&#1492;&#1499;&#1500;</button>
+  <button class="qb" onclick="sp('2025',this)">2025</button>
+  <button class="qb" onclick="sp('2026',this)">2026</button>
+  <span class="fl">|</span>
+  <span class="fl">&#1505;&#1493;&#1490; &#1502;&#1504;&#1493;&#1497;:</span>
+  <select id="stype" onchange="renderSubs()">
+    <option value="all">&#1499;&#1500; &#1505;&#1493;&#1490;&#1497; &#1502;&#1504;&#1493;&#1497;&#1497;&#1501;</option>
+    <option value="s2">&#1502;&#1504;&#1493;&#1497; 2x/&#1513;&#1489;&#1493;&#1506;</option>
+    <option value="sf">&#1502;&#1504;&#1493;&#1497; &#1495;&#1493;&#1508;&#1513;&#1497; 3+</option>
+    <option value="s3">&#1502;&#1504;&#1493;&#1497; 3x/&#1513;&#1489;&#1493;&#1506;</option>
+    <option value="s1">&#1502;&#1504;&#1493;&#1497; 1x/&#1513;&#1489;&#1493;&#1506;</option>
+    <option value="k10p">&#1499;&#1512;&#1496;&#1497;&#1505;&#1497;&#1497;&#1492; 10 &#1488;&#1497;&#1513;&#1497;</option>
+    <option value="k10g">&#1499;&#1512;&#1496;&#1497;&#1505;&#1497;&#1497;&#1492; 10 &#1511;&#1489;&#1493;&#1510;&#1514;&#1497;</option>
+    <option value="ps">&#1488;&#1497;&#1513;&#1497; &#1489;&#1493;&#1491;&#1491;</option>
+    <option value="intro">&#1492;&#1497;&#1499;&#1512;&#1493;&#1514;</option>
+  </select>
+</div>
+<div class="g4" id="sub-kpis"></div>
+<div class="card">
+  <div class="ct">&#128202; &#1502;&#1499;&#1497;&#1512;&#1493;&#1514; &#1500;&#1508;&#1497; &#1505;&#1493;&#1490; &#1502;&#1504;&#1493;&#1497;</div>
+  <div id="sub-bars"></div>
+</div>
+<div class="card">
+  <div class="ct">&#128197; &#1502;&#1499;&#1497;&#1512;&#1493;&#1514; &#1500;&#1508;&#1497; &#1495;&#1493;&#1491;&#1513;</div>
+  <div style="overflow-x:auto"><table>
+    <thead id="sub-thead"></thead>
+    <tbody id="sub-tbody"></tbody>
+    <tfoot id="sub-tfoot"></tfoot>
+  </table></div>
+</div>
+</div>
+
+<div id="p-conv" class="page">
+<div class="g4">
+  <div class="kpi"><div class="kl">&#11088; &#1505;&#1492;"&#1499; &#1492;&#1497;&#1499;&#1512;&#1493;&#1497;&#1493;&#1514;</div><div class="kv">158</div><div class="ks">&#1497;&#1504;&#1493;&#1488;&#1512; 2025 &#8211; &#1502;&#1488;&#1497; 2026</div></div>
+  <div class="kpi"><div class="kl">&#9989; &#1492;&#1493;&#1502;&#1512;&#1493; &#1500;&#1502;&#1504;&#1493;&#1497;</div><div class="kv kg">65 <span style="font-size:13px">(41%)</span></div><div class="ks">&#1492;&#1493;&#1512;&#1488;&#1514; &#1511;&#1489;&#1506;</div></div>
+  <div class="kpi"><div class="kl">&#128260; &#1492;&#1502;&#1513;&#1497;&#1499;&#1493; &#1495;&#1497;&#1510;&#1493;&#1504;&#1497;</div><div class="kv" style="color:var(--pu)">29 <span style="font-size:13px">(18%)</span></div><div class="ks">&#1508;&#1512;&#1497;&#1508;&#1497;&#1496; + &#1489;&#1493;&#1491;&#1491;&#1493;&#1514;</div></div>
+  <div class="kpi"><div class="kl">&#10060; &#1500;&#1488; &#1495;&#1494;&#1512;&#1493;</div><div class="kv kr">64 <span style="font-size:13px">(41%)</span></div><div class="ks">~&#8362;290K &#1508;&#1493;&#1496;&#1504;&#1510;&#1497;&#1488;&#1500;</div></div>
+</div>
+<div class="card">
+  <div class="ct">&#128381; &#1502;&#1513;&#1508;&#1498; &#1492;&#1502;&#1512;&#1492;</div>
+  <div class="funnel">
+    <div class="fs" style="background:var(--bg3)"><div class="fn">158</div><div class="fa" style="color:var(--tx2)">&#1492;&#1497;&#1499;&#1512;&#1493;&#1497;&#1493;&#1514;</div></div>
+    <div class="farr">&rsaquo;</div>
+    <div class="fs" style="background:var(--grd)"><div class="fn" style="color:var(--gr)">65</div><div class="fa" style="color:var(--gr)">&#1502;&#1504;&#1493;&#1497;<br>41%</div></div>
+    <div class="farr">&rsaquo;</div>
+    <div class="fs" style="background:var(--pud)"><div class="fn" style="color:var(--pu)">17</div><div class="fa" style="color:var(--pu)">&#1508;&#1512;&#1497;&#1508;&#1497;&#1496;<br>11%</div></div>
+    <div class="farr">&rsaquo;</div>
+    <div class="fs" style="background:var(--bld)"><div class="fn" style="color:var(--bl)">12</div><div class="fa" style="color:var(--bl)">&#1489;&#1493;&#1491;&#1491;&#1493;&#1514;<br>8%</div></div>
+    <div class="farr">&rsaquo;</div>
+    <div class="fs" style="background:var(--rdd)"><div class="fn" style="color:var(--rd)">64</div><div class="fa" style="color:var(--rd)">&#1500;&#1488; &#1495;&#1494;&#1512;&#1493;<br>41%</div></div>
+  </div>
+</div>
+<div class="card">
+  <div class="ct">&#128203; &#1492;&#1502;&#1512;&#1492; &#1500;&#1508;&#1497; &#1495;&#1493;&#1491;&#1513;</div>
+  <div style="overflow-x:auto"><table>
+    <thead><tr><th>&#1495;&#1493;&#1491;&#1513;</th><th class="tc">&#1492;&#1497;&#1499;&#1512;&#1493;&#1497;&#1493;&#1514;</th><th class="tc">&#1502;&#1504;&#1493;&#1497;</th><th class="tc">%</th><th class="tc">&#1508;&#1512;&#1497;&#1508;&#1497;&#1496;</th><th class="tc">&#1489;&#1493;&#1491;&#1491;&#1493;&#1514;</th><th class="tc">&#1500;&#1488; &#1495;&#1494;&#1512;&#1493;</th></tr></thead>
+    <tbody id="conv-tbody"></tbody>
+    <tfoot><tr><td><b>&#1505;&#1492;"&#1499;</b></td><td class="tc">158</td><td class="tc kg">65</td><td class="tc"><span class="pill pg">41%</span></td><td class="tc">17</td><td class="tc">12</td><td class="tc kr">64</td></tr></tfoot>
+  </table></div>
+  <div class="danger">&#9888;&#65039; &#1497;&#1512;&#1497;&#1491;&#1492; &#1495;&#1491;&#1492; &#1489;-2026: &#1502;-75&#8211;100% &#1500;-13&#8211;33%. 64 &#1500;&#1488; &#1495;&#1494;&#1512;&#1493; = ~&#8362;290,000 &#1508;&#1493;&#1496;&#1504;&#1510;&#1497;&#1488;&#1500;.</div>
+</div>
+</div>
+
+<div id="p-clients" class="page">
+<div class="g4">
+  <div class="kpi"><div class="kl">&#128101; &#1508;&#1506;&#1497;&#1500;&#1497;&#1501;</div><div class="kv">324</div><div class="ks">15.06.26</div></div>
+  <div class="kpi"><div class="kl">&#127978; Boostapp</div><div class="kv kg">234</div><div class="ks">72%</div></div>
+  <div class="kpi"><div class="kl">&#127760; Move</div><div class="kv kb">88</div><div class="ks">27%</div></div>
+  <div class="kpi"><div class="kl">&#9888;&#65039; &#1500;&#1488; &#1492;&#1490;&#1497;&#1506;&#1493; 30+</div><div class="kv kr">131</div><div class="ks">40%</div></div>
+</div>
+<div class="g2">
+  <div class="card">
+    <div class="ct">&#8987; &#1493;&#1514;&#1511; &#1500;&#1511;&#1493;&#1495;&#1493;&#1514;</div>
+    <div class="br"><span class="bl2">0&#8211;3 &#1495;&#1493;&#1491;&#1513;&#1497;&#1501;</span><div class="bt"><div class="bf" style="width:30%;background:var(--bl)"></div></div><span class="bv kb">97 (30%)</span></div>
+    <div class="br"><span class="bl2">3&#8211;12 &#1495;&#1493;&#1491;&#1513;&#1497;&#1501;</span><div class="bt"><div class="bf" style="width:49%;background:var(--gr)"></div></div><span class="bv kg">158 (49%)</span></div>
+    <div class="br"><span class="bl2">&#1502;&#1506;&#1500; &#1513;&#1504;&#1492;</span><div class="bt"><div class="bf" style="width:21%;background:var(--pu)"></div></div><span class="bv" style="color:var(--pu)">69 (21%)</span></div>
+  </div>
+  <div class="card">
+    <div class="ct">&#128205; &#1502;&#1511;&#1493;&#1512; &#1492;&#1490;&#1506;&#1492;</div>
+    <div class="br"><span class="bl2">Boostapp / &#1497;&#1513;&#1497;&#1512;</span><div class="bt"><div class="bf" style="width:72%;background:var(--gr)"></div></div><span class="bv kg">234 (72%)</span></div>
+    <div class="br"><span class="bl2">Move</span><div class="bt"><div class="bf" style="width:27%;background:var(--bl)"></div></div><span class="bv kb">88 (27%)</span></div>
+    <div class="br"><span class="bl2">&#1488;&#1495;&#1512;</span><div class="bt"><div class="bf" style="width:1%;background:var(--am)"></div></div><span class="bv ka">2 (1%)</span></div>
+  </div>
+</div>
+<div class="danger">&#9888;&#65039; 131 &#1500;&#1490; &#1492;&#1490;&#1497;&#1506;&#1493; 30+ &#1497;&#1493;&#1501; = 40% &#1502;&#1492;&#1489;&#1505;&#1497;&#1505;. &#1511;&#1502;&#1508;&#1497;&#1497;&#1503; &#1513;&#1497;&#1502;&#1493;&#1512; &#1502;&#1502;&#1493;&#1511;&#1491; &#1497;&#1499;&#1493;&#1500; &#1500;&#1492;&#1495;&#1494;&#1497;&#1512; 20&#8211;30% &#1502;&#1492;&#1503;.</div>
+</div>
+
+<div id="p-mov" class="page">
+<div class="g4">
+  <div class="kpi"><div class="kl">&#128200; &#1490;&#1497;&#1491;&#1493;&#1500; Move</div><div class="kv kg">x20</div><div class="ks">&#1505;&#1508;&#1496; 2025 &#8594; &#1502;&#1488;&#1497; 2026</div></div>
+  <div class="kpi"><div class="kl">&#128176; Move &#1505;&#1492;"&#1499;</div><div class="kv kb">&#8362;44,995</div><div class="ks">9 &#1495;&#1493;&#1491;&#1513;&#1497;&#1501;</div></div>
+  <div class="kpi"><div class="kl">&#128176; Freefit &#1505;&#1492;"&#1499;</div><div class="kv" style="color:var(--pu)">&#8362;18,605</div><div class="ks">8 &#1495;&#1493;&#1491;&#1513;&#1497;&#1501;</div></div>
+  <div class="kpi"><div class="kl">&#129309; &#1500;&#1511;&#1493;&#1495;&#1493;&#1514; Move</div><div class="kv">88</div><div class="ks">27% &#1502;&#1492;&#1489;&#1505;&#1497;&#1505;</div></div>
+</div>
+<div class="card">
+  <div class="ct">&#128203; &#1502;&#1493;&#1489;&#1502;&#1504;&#1496; &#1500;&#1508;&#1497; &#1495;&#1493;&#1491;&#1513;</div>
+  <div style="overflow-x:auto"><table>
+    <thead><tr><th>&#1495;&#1493;&#1491;&#1513;</th><th class="tc">Move &#1499;&#1504;&#1497;&#1505;&#1493;&#1514;</th><th class="tc">Move &#8362;</th><th class="tc">Freefit &#8362;</th><th class="tc">&#1505;&#1492;"&#1499;</th><th class="tc">&#1502;&#1490;&#1502;&#1492;</th></tr></thead>
+    <tbody>
+      <tr><td>&#1505;&#1508;&#1496;&#1502;&#1489;&#1512; 2025</td><td class="tc">17</td><td class="tc">&#8362;665</td><td class="tc">&#8212;</td><td class="tc"><b>&#8362;665</b></td><td class="tc">&#8212;</td></tr>
+      <tr><td>&#1488;&#1493;&#1511;&#1496;&#1493;&#1489;&#1512; 2025</td><td class="tc">39</td><td class="tc">&#8362;1,545</td><td class="tc">&#8362;250</td><td class="tc"><b>&#8362;1,795</b></td><td class="tc kg">&#9650;170%</td></tr>
+      <tr><td>&#1504;&#1493;&#1489;&#1502;&#1489;&#1512; 2025</td><td class="tc">67</td><td class="tc">&#8362;2,695</td><td class="tc">&#8362;600</td><td class="tc"><b>&#8362;3,295</b></td><td class="tc kg">&#9650;84%</td></tr>
+      <tr><td>&#1491;&#1510;&#1502;&#1489;&#1512; 2025</td><td class="tc">99</td><td class="tc">&#8362;3,975</td><td class="tc">&#8362;1,190</td><td class="tc"><b>&#8362;5,165</b></td><td class="tc kg">&#9650;57%</td></tr>
+      <tr><td>&#1497;&#1504;&#1493;&#1488;&#1512; 2026</td><td class="tc">149</td><td class="tc">&#8362;5,810</td><td class="tc">&#8362;1,780</td><td class="tc"><b>&#8362;7,590</b></td><td class="tc kg">&#9650;47%</td></tr>
+      <tr><td>&#1508;&#1489;&#1512;&#1493;&#1488;&#1512; 2026</td><td class="tc">132</td><td class="tc">&#8362;5,150</td><td class="tc">&#8362;2,090</td><td class="tc"><b>&#8362;7,240</b></td><td class="tc kr">&#9660;5%</td></tr>
+      <tr><td>&#1502;&#1512;&#1509; 2026</td><td class="tc">192</td><td class="tc">&#8362;7,150</td><td class="tc">&#8362;4,305</td><td class="tc"><b>&#8362;11,455</b></td><td class="tc kg">&#9650;58%</td></tr>
+      <tr><td>&#1488;&#1508;&#1512;&#1497;&#1500; 2026</td><td class="tc">231</td><td class="tc">&#8362;9,305</td><td class="tc">&#8362;4,455</td><td class="tc"><b>&#8362;13,760</b></td><td class="tc kg">&#9650;20%</td></tr>
+      <tr><td>&#1502;&#1488;&#1497; 2026</td><td class="tc">240</td><td class="tc">&#8362;9,360</td><td class="tc">&#8362;3,935</td><td class="tc"><b>&#8362;13,295</b></td><td class="tc kr">&#9660;3%</td></tr>
+    </tbody>
+    <tfoot><tr><td><b>&#1505;&#1492;"&#1499;</b></td><td class="tc"><b>1,166</b></td><td class="tc"><b>&#8362;44,995</b></td><td class="tc"><b>&#8362;18,605</b></td><td class="tc"><b>&#8362;63,600</b></td><td></td></tr></tfoot>
+  </table></div>
+  <div class="insight">&#128161; &#1499;&#1500; 10 &#1500;&#1511;&#1493;&#1495;&#1493;&#1514; Move &#1513;&#1502;&#1493;&#1502;&#1512;&#1493;&#1514; &#1500;&#1502;&#1504;&#1493;&#1497; &#1497;&#1513;&#1497;&#1512; = +&#8362;4,500&#8211;5,000/&#1495;&#1493;&#1491;&#1513;.</div>
+</div>
+</div>
+
+<div id="p-leads" class="page">
+<div class="g4">
+  <div class="kpi"><div class="kl">&#128236; &#1505;&#1492;"&#1499; &#1500;&#1497;&#1491;&#1497;&#1501;</div><div class="kv">746</div><div class="ks">&#1497;&#1493;&#1500; 2025 &#8211; &#1497;&#1493;&#1504; 2026</div></div>
+  <div class="kpi"><div class="kl">&#128152; &#1508;&#1497;&#1497;&#1505;&#1489;&#1493;&#1511;</div><div class="kv kb">515</div><div class="ks">69%</div></div>
+  <div class="kpi"><div class="kl">&#127760; Move</div><div class="kv" style="color:var(--pu)">172</div><div class="ks">23%</div></div>
+  <div class="kpi"><div class="kl">&#10067; &#1488;&#1495;&#1512;</div><div class="kv" style="color:var(--tx2)">59</div><div class="ks">8%</div></div>
+</div>
+<div class="card">
+  <div class="ct">&#128203; &#1500;&#1497;&#1491;&#1497;&#1501; &#1500;&#1508;&#1497; &#1495;&#1493;&#1491;&#1513;</div>
+  <div style="overflow-x:auto"><table>
+    <thead><tr><th>&#1495;&#1493;&#1491;&#1513;</th><th class="tc">&#1508;&#1497;&#1497;&#1505;&#1489;&#1493;&#1511;</th><th class="tc">Move</th><th class="tc">&#1488;&#1495;&#1512;</th><th class="tc">&#1505;&#1492;"&#1499;</th></tr></thead>
+    <tbody>
+      <tr><td>&#1497;&#1493;&#1500;&#1497; 2025</td><td class="tc">27</td><td class="tc">0</td><td class="tc">0</td><td class="tc"><b>27</b></td></tr>
+      <tr><td>&#1488;&#1493;&#1490;&#1493;&#1505;&#1496; 2025</td><td class="tc">29</td><td class="tc">2</td><td class="tc">55</td><td class="tc"><b style="color:var(--gr)">86 &#11088;</b></td></tr>
+      <tr><td>&#1505;&#1508;&#1496;&#1502;&#1489;&#1512; 2025</td><td class="tc">26</td><td class="tc">3</td><td class="tc">1</td><td class="tc"><b>30</b></td></tr>
+      <tr><td>&#1488;&#1493;&#1511;&#1496;&#1493;&#1489;&#1512; 2025</td><td class="tc">13</td><td class="tc">12</td><td class="tc">3</td><td class="tc"><b>28</b></td></tr>
+      <tr><td>&#1504;&#1493;&#1489;&#1502;&#1489;&#1512; 2025</td><td class="tc">12</td><td class="tc">7</td><td class="tc">0</td><td class="tc"><b>19</b></td></tr>
+      <tr><td>&#1491;&#1510;&#1502;&#1489;&#1512; 2025</td><td class="tc">35</td><td class="tc">5</td><td class="tc">0</td><td class="tc"><b>40</b></td></tr>
+      <tr><td>&#1497;&#1504;&#1493;&#1488;&#1512; 2026</td><td class="tc">24</td><td class="tc">11</td><td class="tc">0</td><td class="tc"><b>35</b></td></tr>
+      <tr><td>&#1508;&#1489;&#1512;&#1493;&#1488;&#1512; 2026</td><td class="tc">10</td><td class="tc">7</td><td class="tc">0</td><td class="tc"><b>17</b></td></tr>
+      <tr><td>&#1502;&#1512;&#1509; 2026</td><td class="tc">19</td><td class="tc">42</td><td class="tc">0</td><td class="tc"><b>61</b></td></tr>
+      <tr><td>&#1488;&#1508;&#1512;&#1497;&#1500; 2026</td><td class="tc">37</td><td class="tc">36</td><td class="tc">0</td><td class="tc"><b>73</b></td></tr>
+      <tr><td>&#1502;&#1488;&#1497; 2026</td><td class="tc">14</td><td class="tc">34</td><td class="tc">0</td><td class="tc"><b>48</b></td></tr>
+      <tr><td>&#1497;&#1493;&#1504;&#1497; 2026 (&#1495;&#1500;&#1511;&#1497;)</td><td class="tc">0</td><td class="tc">13</td><td class="tc">0</td><td class="tc"><b>13</b></td></tr>
+    </tbody>
+    <tfoot><tr><td><b>&#1505;&#1492;"&#1499;</b></td><td class="tc">515</td><td class="tc">172</td><td class="tc">59</td><td class="tc"><b>746</b></td></tr></tfoot>
+  </table></div>
+</div>
+</div>
+
+<div id="p-occ" class="page">
+<div class="g3">
+  <div class="kpi"><div class="kl">&#128100; &#1488;&#1493;&#1512; &#1513;&#1502;&#1493;&#1488;&#1500;&#1497;</div><div class="kv kg">54.3%</div><div class="ks">312 &#1513;&#1497;&#1506;&#1493;&#1512;&#1497;&#1501;</div></div>
+  <div class="kpi"><div class="kl">&#128100; &#1497;&#1493;&#1489;&#1500; &#1504;&#1497;&#1491;&#1501;</div><div class="kv ka">46.1%</div><div class="ks">161 &#1513;&#1497;&#1506;&#1493;&#1512;&#1497;&#1501;</div></div>
+  <div class="kpi"><div class="kl">&#128100; &#1513;&#1497;&#1512; &#1491;&#1512;&#1497;&#1497;&#1508;&#1493;&#1505;</div><div class="kv ka">41.2%</div><div class="ks">16 &#1513;&#1497;&#1506;&#1493;&#1512;&#1497;&#1501;</div></div>
+</div>
+<div class="card">
+  <div class="ct">&#9200; &#1514;&#1508;&#1493;&#1505;&#1492; &#1500;&#1508;&#1497; &#1513;&#1506;&#1492;</div>
+  <div class="br"><span class="bl2">18:30 <span class="pill pg">&#1513;&#1497;&#1488;</span></span><div class="bt"><div class="bf" style="width:100%;background:var(--gr)"></div></div><span class="bv kg">70.4% (49)</span></div>
+  <div class="br"><span class="bl2">18:00</span><div class="bt"><div class="bf" style="width:95%;background:var(--gr)"></div></div><span class="bv kg">66.9% (74)</span></div>
+  <div class="br"><span class="bl2">10:00</span><div class="bt"><div class="bf" style="width:84%;background:#22c55e99"></div></div><span class="bv">58.9% (53)</span></div>
+  <div class="br"><span class="bl2">09:00</span><div class="bt"><div class="bf" style="width:77%;background:#22c55e77"></div></div><span class="bv">54.2% (73)</span></div>
+  <div class="br"><span class="bl2">08:00</span><div class="bt"><div class="bf" style="width:68%;background:var(--am)"></div></div><span class="bv ka">48.1% (26)</span></div>
+  <div class="br"><span class="bl2">19:30</span><div class="bt"><div class="bf" style="width:57%;background:var(--am)"></div></div><span class="bv ka">39.8% (43)</span></div>
+  <div class="br"><span class="bl2">19:00 <span class="pill pr">&#1504;&#1502;&#1493;&#1498;</span></span><div class="bt"><div class="bf" style="width:55%;background:var(--rd)"></div></div><span class="bv kr">38.6% (71)</span></div>
+  <div class="br"><span class="bl2">20:00 <span class="pill pr">&#1504;&#1502;&#1493;&#1498;</span></span><div class="bt"><div class="bf" style="width:53%;background:var(--rd)"></div></div><span class="bv kr">37.5% (56)</span></div>
+  <div class="br"><span class="bl2">20:30</span><div class="bt"><div class="bf" style="width:44%;background:#ef444488"></div></div><span class="bv kr">31.0% (16)</span></div>
+  <div class="warn">&#9889; &#1513;&#1506;&#1493;&#1514; 19:00&#8211;20:30 = 130+ &#1513;&#1497;&#1506;&#1493;&#1512;&#1497;&#1501; &#1506;&#1501; 31&#8211;39% &#1514;&#1508;&#1493;&#1505;&#1492;. &#1492;&#1494;&#1491;&#1502;&#1504;&#1493;&#1514; &#1510;&#1502;&#1497;&#1495;&#1492;.</div>
+</div>
+</div>
+
+<div id="p-profit" class="page">
+<div class="g4">
+  <div class="kpi"><div class="kl">&#128200; &#1492;&#1499;&#1504;&#1505;&#1492; &#1497;&#1504;&#1493;&#8211;&#1488;&#1508;&#1512; 2026</div><div class="kv kg">&#8362;209,429</div><div class="ks">4 &#1495;&#1493;&#1491;&#1513;&#1497;&#1501;</div></div>
+  <div class="kpi"><div class="kl">&#128197; &#1492;&#1493;&#1510;&#1488;&#1493;&#1514;</div><div class="kv kr">&#8362;51,963</div><div class="ks">&#1499;&#1493;&#1500;&#1500; &#1502;&#1506;"&#1502;</div></div>
+  <div class="kpi"><div class="kl">&#128154; &#1512;&#1493;&#1493;&#1495;</div><div class="kv kg">&#8362;157,466</div><div class="ks">75% &#1502;&#1512;&#1490;'</div></div>
+  <div class="kpi"><div class="kl">&#128202; &#1502;&#1502;&#1493;&#1510;&#1506; &#1495;&#1493;&#1491;&#1513;&#1497;</div><div class="kv">&#8362;52,357</div><div class="ks">&#1492;&#1499;&#1504;&#1505;&#1492;</div></div>
+</div>
+<div class="card">
+  <div class="ct">&#128200; &#1492;&#1499;&#1504;&#1505;&#1493;&#1514; &#1502;&#1493;&#1500; &#1492;&#1493;&#1510;&#1488;&#1493;&#1514; 2026</div>
+  <table>
+    <thead><tr><th>&#1514;&#1511;&#1493;&#1508;&#1492;</th><th class="tc">&#1492;&#1499;&#1504;&#1505;&#1492;</th><th class="tc">&#1492;&#1493;&#1510;&#1488;&#1493;&#1514;</th><th class="tc">&#1512;&#1493;&#1493;&#1495;</th><th class="tc">&#1502;&#1512;&#1490;'</th></tr></thead>
+    <tbody>
+      <tr><td>&#1497;&#1504;&#1493;&#1488;&#1512;+&#1508;&#1489;&#1512;&#1493;&#1488;&#1512; 2026</td><td class="tc">&#8362;92,510</td><td class="tc kr">&#8362;28,809</td><td class="tc kg">&#8362;63,701</td><td class="tc"><span class="pill pg">69%</span></td></tr>
+      <tr><td>&#1502;&#1512;&#1509;+&#1488;&#1508;&#1512;&#1497;&#1500; 2026</td><td class="tc">&#8362;116,919</td><td class="tc kr">&#8362;23,154</td><td class="tc kg">&#8362;93,765</td><td class="tc"><span class="pill pg">80%</span></td></tr>
+    </tbody>
+    <tfoot><tr><td><b>&#1505;&#1492;"&#1499;</b></td><td class="tc">&#8362;209,429</td><td class="tc kr">&#8362;51,963</td><td class="tc kg">&#8362;157,466</td><td class="tc"><span class="pill pg">75%</span></td></tr></tfoot>
+  </table>
+</div>
+<div class="card">
+  <div class="ct">&#128202; &#1492;&#1493;&#1510;&#1488;&#1493;&#1514; &#1506;&#1497;&#1511;&#1512;&#1497;&#1493;&#1514;</div>
+  <div class="br"><span class="bl2">&#1513;&#1499;&#1497;&#1512;&#1493;&#1514;</span><div class="bt"><div class="bf" style="width:100%;background:var(--rd)"></div></div><span class="bv kr">&#8362;23,678</span></div>
+  <div class="br"><span class="bl2">&#1513;&#1499;&#1512; &#1502;&#1488;&#1502;&#1504;&#1493;&#1514;</span><div class="bt"><div class="bf" style="width:72%;background:#ef444499"></div></div><span class="bv">&#8362;17,010</span></div>
+  <div class="br"><span class="bl2">&#1488;&#1512;&#1504;&#1493;&#1504;&#1492;</span><div class="bt"><div class="bf" style="width:60%;background:var(--am)"></div></div><span class="bv ka">&#8362;14,331</span></div>
+  <div class="br"><span class="bl2">&#1502;&#1493;&#1491;&#1506;&#1493;&#1514; &#1508;&#1497;&#1497;&#1505;&#1489;&#1493;&#1511;</span><div class="bt"><div class="bf" style="width:41%;background:var(--bl)"></div></div><span class="bv kb">&#8362;9,814</span></div>
+  <div class="br"><span class="bl2">&#1500;&#1497;&#1493;&#1493;&#1497; &#1506;&#1505;&#1511;&#1497;</span><div class="bt"><div class="bf" style="width:32%;background:var(--pu)"></div></div><span class="bv">&#8362;7,670</span></div>
+  <div class="br"><span class="bl2">&#1511;&#1502;&#1508;&#1497;&#1497;&#1504;&#1512;</span><div class="bt"><div class="bf" style="width:24%;background:var(--pu)"></div></div><span class="bv">&#8362;5,664</span></div>
+  <div class="br"><span class="bl2">&#1488;&#1508;&#1500;&#1497;&#1511;&#1510;&#1497;&#1492;</span><div class="bt"><div class="bf" style="width:12%;background:var(--tx3)"></div></div><span class="bv">&#8362;2,800</span></div>
+</div>
+</div>
+
+</main>
+<script>
+var REV=[
+  {m:'\u05d9\u05e0\u05d5\u05d0\u05e8 2025',y:2025,manual:3235,boost:22300,movff:0},
+  {m:'\u05e4\u05d1\u05e8\u05d5\u05d0\u05e8 2025',y:2025,manual:11250,boost:24248,movff:0},
+  {m:'\u05de\u05e8\u05e5 2025',y:2025,manual:5615,boost:27885,movff:0},
+  {m:'\u05d0\u05e4\u05e8\u05d9\u05dc 2025',y:2025,manual:9700,boost:25300,movff:0},
+  {m:'\u05de\u05d0\u05d9 2025',y:2025,manual:8400,boost:29000,movff:0},
+  {m:'\u05d9\u05d5\u05e0\u05d9 2025',y:2025,manual:5400,boost:24535,movff:0},
+  {m:'\u05d9\u05d5\u05dc\u05d9 2025',y:2025,manual:8690,boost:25590,movff:0},
+  {m:'\u05d0\u05d5\u05d2\u05d5\u05e1\u05d8 2025',y:2025,manual:9210,boost:21850,movff:0},
+  {m:'\u05e1\u05e4\u05d8\u05de\u05d1\u05e8 2025',y:2025,manual:3250,boost:20570,movff:0},
+  {m:'\u05d0\u05d5\u05e7\u05d8\u05d5\u05d1\u05e8 2025',y:2025,manual:6710,boost:20325,movff:1795},
+  {m:'\u05e0\u05d5\u05d1\u05de\u05d1\u05e8 2025',y:2025,manual:9370,boost:27240,movff:3295},
+  {m:'\u05d3\u05e6\u05de\u05d1\u05e8 2025',y:2025,manual:9795,boost:21770,movff:5165},
+  {m:'\u05d9\u05e0\u05d5\u05d0\u05e8 2026',y:2026,manual:15230,boost:21930,movff:7590},
+  {m:'\u05e4\u05d1\u05e8\u05d5\u05d0\u05e8 2026',y:2026,manual:12510,boost:28010,movff:7240},
+  {m:'\u05de\u05e8\u05e5 2026',y:2026,manual:14515,boost:26214,movff:11455},
+  {m:'\u05d0\u05e4\u05e8\u05d9\u05dc 2026',y:2026,manual:18710,boost:32265,movff:13760},
+  {m:'\u05de\u05d0\u05d9 2026',y:2026,manual:16545,boost:31470,movff:13295}
+];
+
+var CONV=[
+  {m:'\u05d9\u05e0\u05d5\u05d0\u05e8 2025',t:7,s:7,f:0,g:0,n:0},
+  {m:'\u05e4\u05d1\u05e8\u05d5\u05d0\u05e8 2025',t:4,s:3,f:0,g:0,n:1},
+  {m:'\u05de\u05e8\u05e5 2025',t:9,s:6,f:0,g:1,n:2},
+  {m:'\u05d0\u05e4\u05e8\u05d9\u05dc 2025',t:4,s:3,f:0,g:0,n:1},
+  {m:'\u05de\u05d0\u05d9 2025',t:2,s:1,f:0,g:0,n:1},
+  {m:'\u05d9\u05d5\u05dc\u05d9 2025',t:8,s:7,f:0,g:0,n:1},
+  {m:'\u05d0\u05d5\u05d2\u05d5\u05e1\u05d8 2025',t:4,s:4,f:0,g:0,n:0},
+  {m:'\u05e1\u05e4\u05d8\u05de\u05d1\u05e8 2025',t:2,s:1,f:0,g:0,n:1},
+  {m:'\u05d0\u05d5\u05e7\u05d8\u05d5\u05d1\u05e8 2025',t:9,s:3,f:0,g:0,n:6},
+  {m:'\u05e0\u05d5\u05d1\u05de\u05d1\u05e8 2025',t:11,s:5,f:0,g:1,n:5},
+  {m:'\u05d3\u05e6\u05de\u05d1\u05e8 2025',t:14,s:6,f:1,g:1,n:6},
+  {m:'\u05d9\u05e0\u05d5\u05d0\u05e8 2026',t:12,s:3,f:2,g:3,n:4},
+  {m:'\u05e4\u05d1\u05e8\u05d5\u05d0\u05e8 2026',t:21,s:6,f:4,g:2,n:9},
+  {m:'\u05de\u05e8\u05e5 2026',t:21,s:3,f:6,g:2,n:10},
+  {m:'\u05d0\u05e4\u05e8\u05d9\u05dc 2026',t:15,s:5,f:4,g:0,n:6},
+  {m:'\u05de\u05d0\u05d9 2026',t:15,s:2,f:0,g:2,n:11}
+];
+
+var SCAT=['\u05de\u05e0\u05d5\u05d9 2x/\u05e9\u05d1\u05d5\u05e2','\u05de\u05e0\u05d5\u05d9 \u05d7\u05d5\u05e4\u05e9\u05d9 3+','\u05de\u05e0\u05d5\u05d9 3x/\u05e9\u05d1\u05d5\u05e2','\u05de\u05e0\u05d5\u05d9 1x/\u05e9\u05d1\u05d5\u05e2','\u05db\u05e8\u05d8\u05d9\u05e1\u05d9\u05d9\u05d4 10 \u05d0\u05d9\u05e9\u05d9','\u05db\u05e8\u05d8\u05d9\u05e1\u05d9\u05d9\u05d4 10 \u05e7\u05d1\u05d5\u05e6\u05ea\u05d9','\u05d0\u05d9\u05e9\u05d9 \u05d1\u05d5\u05d3\u05d3','\u05d4\u05d9\u05db\u05e8\u05d5\u05ea','\u05d0\u05d7\u05e8'];
+var SKEYS=['s2','sf','s3','s1','k10p','k10g','ps','intro','oth'];
+var STOT=[188585,75820,51930,20875,92150,16865,14190,10700,5175];
+var SCNT=[415,131,99,77,36,62,103,154,25];
+var SMON=['2025-01','2025-02','2025-03','2025-04','2025-05','2025-06','2025-07','2025-08','2025-09','2025-10','2025-11','2025-12','2026-01','2026-02','2026-03','2026-04','2026-05'];
+var SDATA=[
+  [7900,9750,9800,12700,12700,12700,12700,10965,9950,10595,12610,12465,8850,12065,8320,10805,13710],
+  [6950,7000,8200,6450,5900,5300,5300,5150,4700,4100,2670,2250,2250,2850,2250,2250,2250],
+  [1100,1650,1650,2750,2700,2150,1100,1550,1550,550,3600,4650,4650,6080,4750,5750,5700],
+  [900,600,600,900,900,600,900,550,600,600,1600,1050,1300,2550,2550,2125,2550],
+  [9500,8000,5500,7500,8200,2500,10700,7100,5600,0,7400,0,4800,2600,7550,2200,3000],
+  [2500,1150,2550,0,1600,2050,1700,0,0,2400,1315,1600,0,0,0,0,0],
+  [1900,250,700,0,250,500,750,580,0,400,660,0,280,0,1980,2340,3600],
+  [1150,650,1200,500,300,0,1500,600,450,950,1350,280,240,420,510,300,300],
+  [0,0,0,0,0,85,0,450,0,200,200,0,685,2590,845,120,0]
+];
+var SCOL=['var(--gr)','var(--bl)','var(--pu)','var(--am)','#06b6d4','#f97316','#ec4899','#84cc16','var(--tx3)'];
+
+var revP='all', subP='all';
+
+function fmt(n){return '\u20aa'+Math.round(n).toLocaleString();}
+function pct(a,b){return b>0?Math.round(a/b*100):0;}
+function pill(p){return p>=60?'<span class="pill pg">'+p+'%</span>':p>=35?'<span class="pill pa">'+p+'%</span>':'<span class="pill pr">'+p+'%</span>';}
+
+function rp(p,btn){
+  revP=p;
+  var btns=document.querySelectorAll('#p-rev .qb');
+  for(var i=0;i<btns.length;i++) btns[i].classList.remove('on');
+  btn.classList.add('on');
+  renderRev();
+}
+
+function sp(p,btn){
+  subP=p;
+  var btns=document.querySelectorAll('#p-subs .qb');
+  for(var i=0;i<btns.length;i++) btns[i].classList.remove('on');
+  btn.classList.add('on');
+  renderSubs();
+}
+
+function renderRev(){
+  var src=document.getElementById('rsrc').value;
+  var d=REV.filter(function(x){return revP==='all'||(revP==='2025'&&x.y===2025)||(revP==='2026'&&x.y===2026);});
+  var tM=0,tB=0,tMF=0;
+  for(var i=0;i<d.length;i++){tM+=d[i].manual;tB+=d[i].boost;tMF+=d[i].movff;}
+  var tAll=tM+tB;
+  function show(r){return src==='boost'?r.boost:src==='manual'?r.manual:r.manual+r.boost;}
+  var kT=src==='boost'?tB:src==='manual'?tM:tAll;
+  var avg=Math.round(kT/d.length);
+  var best=d[0];
+  for(var i=1;i<d.length;i++){if(show(d[i])>show(best)) best=d[i];}
+  document.getElementById('r-kpis').innerHTML=
+    '<div class="kpi"><div class="kl">\u05e1\u05d4"\u05db \u05ea\u05e7\u05d5\u05e4\u05d4</div><div class="kv">'+fmt(kT)+'</div><div class="ks">'+d.length+' \u05d7\u05d5\u05d3\u05e9\u05d9\u05dd</div></div>'+
+    '<div class="kpi"><div class="kl">\u05de\u05de\u05d5\u05e6\u05e2 \u05d7\u05d5\u05d3\u05e9\u05d9</div><div class="kv">'+fmt(avg)+'</div><div class="ks">\u05dc\u05d7\u05d5\u05d3\u05e9</div></div>'+
+    '<div class="kpi"><div class="kl">\u05d7\u05d5\u05d3\u05e9 \u05e9\u05d9\u05d0</div><div class="kv kg" style="font-size:14px">'+best.m+'</div><div class="ks">'+fmt(show(best))+'</div></div>'+
+    '<div class="kpi"><div class="kl">Boostapp %</div><div class="kv">'+pct(tB,tAll)+'%</div><div class="ks">\u05de\u05e1\u05d4"\u05db</div></div>';
+  var rows='',prev=0;
+  for(var i=0;i<d.length;i++){
+    var r=d[i],s=show(r);
+    var arr=prev>0?(s>prev?'<span class="kg" style="font-size:10px">\u25b2'+pct(s-prev,prev)+'%</span>':'<span class="kr" style="font-size:10px">\u25bc'+pct(prev-s,prev)+'%</span>'):'&mdash;';
+    rows+='<tr><td>'+r.m+'</td><td class="tc">'+(src==='boost'?'&mdash;':fmt(r.manual))+'</td><td class="tc">'+(src!=='all'?'&mdash;':(r.movff?fmt(r.movff):'&mdash;'))+'</td><td class="tc">'+(src==='manual'?'&mdash;':fmt(r.boost))+'</td><td class="tc"><b>'+fmt(s)+'</b></td><td class="tc">'+arr+'</td></tr>';
+    prev=s;
+  }
+  document.getElementById('r-tbody').innerHTML=rows;
+  document.getElementById('r-tfoot').innerHTML='<tr><td><b>\u05e1\u05d4"\u05db</b></td><td class="tc">'+(src==='boost'?'&mdash;':fmt(tM))+'</td><td class="tc">'+(src!=='all'?'&mdash;':fmt(tMF))+'</td><td class="tc">'+(src==='manual'?'&mdash;':fmt(tB))+'</td><td class="tc"><b>'+fmt(kT)+'</b></td><td></td></tr>';
+  var mx=Math.max(tM,tB)||1;
+  document.getElementById('r-bars').innerHTML=
+    '<div class="br"><span class="bl2">\u05d9\u05d3\u05e0\u05d9 (\u05db\u05d5\u05dc\u05dc \u05de\u05d5\u05d1+\u05e4\u05e8\u05d9\u05e4\u05d9\u05d8)</span><div class="bt"><div class="bf" style="width:'+pct(tM,mx)+'%;background:var(--bl)"></div></div><span class="bv kb">'+fmt(tM)+' ('+pct(tM,tAll)+'%)</span></div>'+
+    '<div class="br"><span class="bl2">Boostapp</span><div class="bt"><div class="bf" style="width:'+pct(tB,mx)+'%;background:var(--gr)"></div></div><span class="bv kg">'+fmt(tB)+' ('+pct(tB,tAll)+'%)</span></div>'+
+    '<div class="br"><span class="bl2">\u05de\u05d5\u05d1+\u05e4\u05e8\u05d9\u05e4\u05d9\u05d8 (\u05de\u05ea\u05d5\u05da \u05d9\u05d3\u05e0\u05d9)</span><div class="bt"><div class="bf" style="width:'+pct(tMF,mx)+'%;background:var(--pu);opacity:.7"></div></div><span class="bv" style="color:var(--pu)">'+fmt(tMF)+'</span></div>';
+  document.getElementById('r-insight').innerHTML='\u05d7\u05d5\u05d3\u05e9 \u05e9\u05d9\u05d0: <b>'+best.m+'</b> ('+fmt(show(best))+'). \u05de\u05de\u05d5\u05e6\u05e2: '+fmt(avg)+'/\u05d7\u05d5\u05d3\u05e9. Boostapp = '+pct(tB,tAll)+'%.';
+}
+
+function renderSubs(){
+  var stype=document.getElementById('stype').value;
+  var idxs=[];
+  if(stype==='all'){for(var i=0;i<SKEYS.length;i++) idxs.push(i);}
+  else{for(var i=0;i<SKEYS.length;i++){if(SKEYS[i]===stype) idxs.push(i);}}
+  var mons=subP==='2025'?SMON.filter(function(m){return m.startsWith('2025');}):subP==='2026'?SMON.filter(function(m){return m.startsWith('2026');}):SMON;
+  var midxs=[];
+  for(var i=0;i<mons.length;i++){for(var j=0;j<SMON.length;j++){if(SMON[j]===mons[i]) midxs.push(j);}}
+  var totRev=0,totCnt=0;
+  for(var i=0;i<idxs.length;i++){totRev+=STOT[idxs[i]];totCnt+=SCNT[idxs[i]];}
+  var topI=idxs[0];
+  for(var i=1;i<idxs.length;i++){if(STOT[idxs[i]]>STOT[topI]) topI=idxs[i];}
+  document.getElementById('sub-kpis').innerHTML=
+    '<div class="kpi"><div class="kl">\u05d4\u05db\u05e0\u05e1\u05d4 \u05e1\u05d4"\u05db</div><div class="kv">'+fmt(totRev)+'</div><div class="ks">\u05dc\u05e4\u05d9 \u05e4\u05d9\u05dc\u05d8\u05e8</div></div>'+
+    '<div class="kpi"><div class="kl">\u05de\u05db\u05d9\u05e8\u05d5\u05ea</div><div class="kv">'+totCnt+'</div><div class="ks">\u05e2\u05e1\u05e7\u05d0\u05d5\u05ea</div></div>'+
+    '<div class="kpi"><div class="kl">\u05de\u05e0\u05d5\u05d9 \u05de\u05d5\u05d1\u05d9\u05dc</div><div class="kv kg" style="font-size:12px">'+SCAT[topI]+'</div><div class="ks">'+fmt(STOT[topI])+'</div></div>'+
+    '<div class="kpi"><div class="kl">\u05de\u05de\u05d5\u05e6\u05e2 \u05dc\u05e2\u05e1\u05e7\u05d4</div><div class="kv">'+(totCnt>0?fmt(totRev/totCnt):'&mdash;')+'</div><div class="ks">\u05dc\u05db\u05dc \u05de\u05db\u05d9\u05e8\u05d4</div></div>';
+  var mx=0;for(var i=0;i<idxs.length;i++){if(STOT[idxs[i]]>mx) mx=STOT[idxs[i]];}
+  var bars='';
+  for(var i=0;i<idxs.length;i++){
+    var ci=idxs[i];
+    bars+='<div class="br"><span class="bl2">'+SCAT[ci]+'</span><div class="bt"><div class="bf" style="width:'+pct(STOT[ci],mx||1)+'%;background:'+SCOL[ci]+'"></div></div><span class="bv" style="color:'+SCOL[ci]+'">'+fmt(STOT[ci])+' ('+SCNT[ci]+')</span></div>';
+  }
+  document.getElementById('sub-bars').innerHTML=bars;
+  var thead='<tr><th>\u05d7\u05d5\u05d3\u05e9</th>';
+  for(var i=0;i<idxs.length;i++) thead+='<th class="tc" style="font-size:10px">'+SCAT[idxs[i]]+'</th>';
+  thead+='<th class="tc">\u05e1\u05d4"\u05db</th></tr>';
+  document.getElementById('sub-thead').innerHTML=thead;
+  var tbody='',tfrow='<tr><td><b>\u05e1\u05d4"\u05db</b></td>',grandT=0;
+  var colTots=[];
+  for(var ci=0;ci<idxs.length;ci++){
+    var s=0;
+    for(var mi=0;mi<midxs.length;mi++) s+=SDATA[idxs[ci]][midxs[mi]]||0;
+    colTots.push(s);grandT+=s;
+  }
+  for(var mi=0;mi<midxs.length;mi++){
+    var row='<tr><td style="white-space:nowrap;font-size:10px">'+mons[mi].replace('2025-','').replace('2026-','20')+'</td>',rowT=0;
+    for(var ci=0;ci<idxs.length;ci++){
+      var v=SDATA[idxs[ci]][midxs[mi]]||0;
+      row+='<td class="tc">'+(v>0?fmt(v):'&mdash;')+'</td>';
+      rowT+=v;
+    }
+    row+='<td class="tc"><b>'+(rowT>0?fmt(rowT):'&mdash;')+'</b></td></tr>';
+    tbody+=row;
+  }
+  for(var ci=0;ci<idxs.length;ci++) tfrow+='<td class="tc"><b>'+fmt(colTots[ci])+'</b></td>';
+  tfrow+='<td class="tc"><b>'+fmt(grandT)+'</b></td></tr>';
+  document.getElementById('sub-tbody').innerHTML=tbody;
+  document.getElementById('sub-tfoot').innerHTML=tfrow;
+}
+
+function renderConv(){
+  var rows='';
+  for(var i=0;i<CONV.length;i++){
+    var r=CONV[i],p=pct(r.s,r.t);
+    rows+='<tr><td>'+r.m+'</td><td class="tc">'+r.t+'</td><td class="tc '+(p>=60?'kg':p>=35?'ka':'kr')+'">'+r.s+'</td><td class="tc">'+pill(p)+'</td><td class="tc">'+r.f+'</td><td class="tc">'+r.g+'</td><td class="tc '+(r.n>5?'kr':'')+'">'+r.n+'</td></tr>';
+  }
+  document.getElementById('conv-tbody').innerHTML=rows;
+}
+
+function showTab(id,btn){
+  var tabs=document.querySelectorAll('.tab');
+  for(var i=0;i<tabs.length;i++) tabs[i].classList.remove('on');
+  btn.classList.add('on');
+  var pages=document.querySelectorAll('.page');
+  for(var i=0;i<pages.length;i++) pages[i].classList.remove('on');
+  document.getElementById('p-'+id).classList.add('on');
+}
+
+window.onload=function(){
+  renderRev();
+  renderSubs();
+  renderConv();
+};
+</script>
+</body>
+</html>
