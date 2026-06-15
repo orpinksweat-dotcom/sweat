@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<!-- saved from url=(0055)file:///C:/Users/ortit/Downloads/sweat_dashboard_2.html -->
+<html lang="he" dir="rtl"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>סוואט רעננה | דשבורד בעלים</title>
+<style>
+:root{--bg:#0f0f0f;--bg2:#181818;--bg3:#222;--bd:rgba(255,255,255,.08);--bd2:rgba(255,255,255,.14);--tx:#f0f0f0;--tx2:#999;--tx3:#555;--gr:#22c55e;--grd:rgba(34,197,94,.12);--rd:#ef4444;--rdd:rgba(239,68,68,.12);--am:#f59e0b;--amd:rgba(245,158,11,.12);--bl:#3b82f6;--bld:rgba(59,130,246,.12);--pu:#a855f7;--pud:rgba(168,85,247,.12);}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--tx);font-family:-apple-system,'Segoe UI',sans-serif;font-size:13px;}
+nav{background:var(--bg2);border-bottom:1px solid var(--bd);padding:0 16px;display:flex;align-items:center;gap:4px;height:50px;position:sticky;top:0;z-index:100;overflow-x:auto;}
+.logo{font-size:14px;font-weight:700;color:var(--gr);margin-left:12px;white-space:nowrap;flex-shrink:0;}
+.logo span{color:var(--tx2);font-weight:400;font-size:11px;}
+.tab{padding:5px 12px;border-radius:6px;border:none;background:transparent;color:var(--tx2);cursor:pointer;font-size:12px;white-space:nowrap;flex-shrink:0;}
+.tab:hover{background:var(--bg3);color:var(--tx);}
+.tab.on{background:var(--grd);color:var(--gr);font-weight:600;}
+.nright{margin-right:auto;display:flex;align-items:center;gap:6px;flex-shrink:0;}
+.dot{width:6px;height:6px;border-radius:50%;background:var(--gr);animation:p 2s infinite;}
+@keyframes p{0%,100%{opacity:1}50%{opacity:.3}}
+.lup{font-size:10px;color:var(--tx3);}
+main{padding:16px;max-width:1100px;margin:0 auto;}
+.page{display:none;}.page.on{display:block;}
+.filters{background:var(--bg3);border-radius:8px;padding:10px 14px;margin-bottom:12px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.fl{font-size:11px;color:var(--tx3);white-space:nowrap;}
+select{font-size:11px;padding:4px 8px;border-radius:6px;border:1px solid var(--bd2);background:var(--bg2);color:var(--tx);cursor:pointer;}
+.qb{font-size:11px;padding:3px 9px;border-radius:20px;border:1px solid var(--bd);background:transparent;color:var(--tx2);cursor:pointer;}
+.qb:hover{color:var(--tx);border-color:var(--bd2);}
+.qb.on{background:var(--grd);color:var(--gr);border-color:rgba(34,197,94,.3);}
+.g4{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:12px;}
+.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px;}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px;}
+.kpi{background:var(--bg2);border:1px solid var(--bd);border-radius:10px;padding:13px 15px;}
+.kl{font-size:10px;color:var(--tx2);margin-bottom:5px;}
+.kv{font-size:22px;font-weight:700;}
+.ks{font-size:10px;color:var(--tx3);margin-top:3px;}
+.kg{color:var(--gr);}.kr{color:var(--rd);}.ka{color:var(--am);}.kb{color:var(--bl);}
+.card{background:var(--bg2);border:1px solid var(--bd);border-radius:12px;padding:14px;margin-bottom:12px;}
+.ct{font-size:13px;font-weight:600;color:var(--tx);margin-bottom:12px;display:flex;align-items:center;gap:6px;}
+table{width:100%;border-collapse:collapse;font-size:11px;}
+th{text-align:right;padding:6px 7px;color:var(--tx3);border-bottom:1px solid var(--bd);font-weight:500;white-space:nowrap;}
+td{padding:6px 7px;border-bottom:1px solid var(--bd);color:var(--tx);}
+tr:last-child td{border-bottom:none;}
+tr:hover td{background:rgba(255,255,255,.02);}
+.tc{text-align:center;}
+tfoot td{background:var(--bg3)!important;font-weight:700;border-top:1px solid var(--bd2);}
+.pill{display:inline-flex;font-size:10px;padding:2px 7px;border-radius:20px;font-weight:600;}
+.pg{background:var(--grd);color:var(--gr);}
+.pr{background:var(--rdd);color:var(--rd);}
+.pa{background:var(--amd);color:var(--am);}
+.pb{background:var(--bld);color:var(--bl);}
+.pp{background:var(--pud);color:var(--pu);}
+.br{display:flex;align-items:center;gap:8px;margin-bottom:7px;}
+.bl2{font-size:11px;color:var(--tx2);width:140px;flex-shrink:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.bt{flex:1;height:6px;background:var(--bg3);border-radius:3px;overflow:hidden;}
+.bf{height:100%;border-radius:3px;}
+.bv{font-size:11px;font-weight:600;width:90px;text-align:left;flex-shrink:0;}
+.funnel{display:flex;align-items:stretch;margin-bottom:14px;}
+.fs{flex:1;text-align:center;padding:13px 6px;}
+.fs:first-child{border-radius:8px 0 0 8px;}
+.fs:last-child{border-radius:0 8px 8px 0;}
+.fn{font-size:20px;font-weight:700;}
+.fa{font-size:10px;margin-top:4px;line-height:1.4;}
+.farr{font-size:16px;color:var(--tx3);display:flex;align-items:center;flex-shrink:0;}
+.insight{background:rgba(34,197,94,.05);border-right:3px solid var(--gr);border-radius:0 8px 8px 0;padding:9px 13px;font-size:11px;color:var(--tx2);line-height:1.7;margin-top:10px;}
+.warn{background:rgba(245,158,11,.05);border-right:3px solid var(--am);border-radius:0 8px 8px 0;padding:9px 13px;font-size:11px;color:var(--am);line-height:1.7;margin-top:10px;}
+.danger{background:var(--rdd);border-right:3px solid var(--rd);border-radius:0 8px 8px 0;padding:9px 13px;font-size:11px;color:var(--rd);line-height:1.7;margin-top:10px;}
+.note{font-size:10px;color:var(--tx3);margin-bottom:8px;padding:6px 10px;background:var(--bg3);border-radius:6px;}
+</style>
+</head>
+<body>
+<nav>
+  <div class="logo">💪 סוואט רעננה <span>| בעלים</span></div>
+  <button class="tab on" onclick="show(&#39;rev&#39;,this)">💰 הכנסות</button>
+  <button class="tab" onclick="show(&#39;subs&#39;,this)">📋 מנויים</button>
+  <button class="tab" onclick="show(&#39;conv&#39;,this)">🎯 המרות</button>
+  <button class="tab" onclick="show(&#39;clients&#39;,this)">👥 לקוחות</button>
+  <button class="tab" onclick="show(&#39;mov&#39;,this)">🌐 מובמנט</button>
+  <button class="tab" onclick="show(&#39;leads&#39;,this)">📬 לידים</button>
+  <button class="tab" onclick="show(&#39;occ&#39;,this)">📈 תפוסה</button>
+  <button class="tab" onclick="show(&#39;profit&#39;,this)">📊 רווח</button>
+  <div class="nright"><div class="dot"></div><span class="lup">מאי 2026</span></div>
+</nav>
+
+<main>
+
+<!-- REVENUE -->
+<div id="p-rev" class="page on">
+  <div class="note">💡 הכנסות = ידני (ביט/פייבוקס/העברה — כולל מוב ופריפיט) + Boostapp. מוב ופריפיט הם תת-פירוט בתוך הידני, לא נוספים עליו.</div>
+  <div class="filters">
+    <span class="fl">תקופה:</span>
+    <button class="qb on" onclick="rp(&#39;all&#39;,this)">הכל</button>
+    <button class="qb" onclick="rp(&#39;2025&#39;,this)">2025</button>
+    <button class="qb" onclick="rp(&#39;2026&#39;,this)">2026</button>
+    <span class="fl">|</span>
+    <span class="fl">תצוגה:</span>
+    <select id="rsrc" onchange="renderRev()">
+      <option value="all">הכל</option>
+      <option value="boost">Boostapp בלבד</option>
+      <option value="manual">ידני בלבד</option>
+    </select>
+  </div>
+  <div class="g4" id="r-kpis"></div>
+  <div class="card">
+    <div class="ct">📋 הכנסות חודשיות — נתונים אמיתיים</div>
+    <table>
+      <thead><tr>
+        <th>חודש</th>
+        <th class="tc">ידני (כולל מוב+פריפיט)</th>
+        <th class="tc">מוב+פריפיט (מתוך ידני)</th>
+        <th class="tc">Boostapp</th>
+        <th class="tc">סה"כ</th>
+        <th class="tc">מגמה</th>
+      </tr></thead>
+      <tbody id="r-tbody"></tbody>
+      <tfoot id="r-tfoot"></tfoot>
+    </table>
+    <div class="insight" id="r-insight"></div>
+  </div>
+  <div class="card">
+    <div class="ct">📊 פילוח מקורות — כל התקופה</div>
+    <div id="r-bars"></div>
+  </div>
+</div>
+
+<!-- SUBSCRIPTIONS -->
+<div id="p-subs" class="page">
+  <div class="filters">
+    <span class="fl">תקופה:</span>
+    <button class="qb on" onclick="sp(&#39;all&#39;,this)">הכל</button>
+    <button class="qb" onclick="sp(&#39;2025&#39;,this)">2025</button>
+    <button class="qb" onclick="sp(&#39;2026&#39;,this)">2026</button>
+    <span class="fl">|</span>
+    <span class="fl">סוג מנוי:</span>
+    <select id="stype" onchange="renderSubs()">
+      <option value="all">כל סוגי המנויים</option>
+      <option value="מנוי 2×/שבוע">מנוי 2×/שבוע</option>
+      <option value="מנוי חופשי 3+">מנוי חופשי 3+</option>
+      <option value="מנוי 3×/שבוע">מנוי 3×/שבוע</option>
+      <option value="מנוי 1×/שבוע">מנוי 1×/שבוע</option>
+      <option value="כרטיסייה 10 אישי">כרטיסייה 10 אישי</option>
+      <option value="כרטיסייה 10 קבוצתי">כרטיסייה 10 קבוצתי</option>
+      <option value="אישי בודד">אישי בודד</option>
+      <option value="היכרות">היכרות</option>
+    </select>
+  </div>
+  <div class="g4" id="sub-kpis"></div>
+  <div class="card">
+    <div class="ct">📋 מכירות לפי סוג מנוי</div>
+    <div id="sub-bars"></div>
+  </div>
+  <div class="card">
+    <div class="ct">📅 מכירות לפי סוג מנוי × חודש</div>
+    <div style="overflow-x:auto;"><table>
+      <thead id="sub-thead"></thead>
+      <tbody id="sub-tbody"></tbody>
+      <tfoot id="sub-tfoot"></tfoot>
+    </table></div>
+  </div>
+</div>
+
+<!-- CONVERSION -->
+<div id="p-conv" class="page">
+  <div class="g4">
+    <div class="kpi"><div class="kl">⭐ סה"כ היכרויות</div><div class="kv">158</div><div class="ks">ינואר 2025 – מאי 2026</div></div>
+    <div class="kpi"><div class="kl">✅ הומרו למנוי</div><div class="kv kg">65 <span style="font-size:13px">(41%)</span></div><div class="ks">הוראת קבע / מנוי</div></div>
+    <div class="kpi"><div class="kl">🔄 המשיכו חיצוני</div><div class="kv" style="color:var(--pu)">29 <span style="font-size:13px">(18%)</span></div><div class="ks">פריפיט + כניסות בודדות</div></div>
+    <div class="kpi"><div class="kl">❌ לא חזרו</div><div class="kv kr">64 <span style="font-size:13px">(41%)</span></div><div class="ks">~₪290K פוטנציאל אבוד</div></div>
+  </div>
+  <div class="card">
+    <div class="ct">🔽 משפך המרה</div>
+    <div class="funnel">
+      <div class="fs" style="background:var(--bg3)"><div class="fn">158</div><div class="fa" style="color:var(--tx2)">היכרויות</div></div>
+      <div class="farr">›</div>
+      <div class="fs" style="background:var(--grd)"><div class="fn" style="color:var(--gr)">65</div><div class="fa" style="color:var(--gr)">מנוי/הו"ק<br>41%</div></div>
+      <div class="farr">›</div>
+      <div class="fs" style="background:var(--pud)"><div class="fn" style="color:var(--pu)">17</div><div class="fa" style="color:var(--pu)">פריפיט<br>11%</div></div>
+      <div class="farr">›</div>
+      <div class="fs" style="background:var(--bld)"><div class="fn" style="color:var(--bl)">12</div><div class="fa" style="color:var(--bl)">בודדות<br>8%</div></div>
+      <div class="farr">›</div>
+      <div class="fs" style="background:var(--rdd)"><div class="fn" style="color:var(--rd)">64</div><div class="fa" style="color:var(--rd)">לא חזרו<br>41%</div></div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="ct">📋 המרה לפי חודש</div>
+    <table>
+      <thead><tr><th>חודש</th><th class="tc">היכרויות</th><th class="tc">מנוי</th><th class="tc">% מנוי</th><th class="tc">פריפיט</th><th class="tc">בודדות</th><th class="tc">לא חזרו</th></tr></thead>
+      <tbody>
+        <tr><td>ינואר 2025</td><td class="tc">7</td><td class="tc kg">7</td><td class="tc"><span class="pill pg">100%</span></td><td class="tc">0</td><td class="tc">0</td><td class="tc">0</td></tr>
+        <tr><td>פברואר 2025</td><td class="tc">4</td><td class="tc kg">3</td><td class="tc"><span class="pill pg">75%</span></td><td class="tc">0</td><td class="tc">0</td><td class="tc">1</td></tr>
+        <tr><td>מרץ 2025</td><td class="tc">9</td><td class="tc kg">6</td><td class="tc"><span class="pill pg">67%</span></td><td class="tc">0</td><td class="tc">1</td><td class="tc">2</td></tr>
+        <tr><td>אפריל 2025</td><td class="tc">4</td><td class="tc kg">3</td><td class="tc"><span class="pill pg">75%</span></td><td class="tc">0</td><td class="tc">0</td><td class="tc">1</td></tr>
+        <tr><td>מאי 2025</td><td class="tc">2</td><td class="tc ka">1</td><td class="tc"><span class="pill pa">50%</span></td><td class="tc">0</td><td class="tc">0</td><td class="tc">1</td></tr>
+        <tr><td>יולי 2025</td><td class="tc">8</td><td class="tc kg">7</td><td class="tc"><span class="pill pg">88%</span></td><td class="tc">0</td><td class="tc">0</td><td class="tc">1</td></tr>
+        <tr><td>אוגוסט 2025</td><td class="tc">4</td><td class="tc kg">4</td><td class="tc"><span class="pill pg">100%</span></td><td class="tc">0</td><td class="tc">0</td><td class="tc">0</td></tr>
+        <tr><td>ספטמבר 2025</td><td class="tc">2</td><td class="tc ka">1</td><td class="tc"><span class="pill pa">50%</span></td><td class="tc">0</td><td class="tc">0</td><td class="tc">1</td></tr>
+        <tr style="background:rgba(239,68,68,.05)"><td>אוקטובר 2025</td><td class="tc">9</td><td class="tc kr">3</td><td class="tc"><span class="pill pr">33%</span></td><td class="tc">0</td><td class="tc">0</td><td class="tc kr">6</td></tr>
+        <tr><td>נובמבר 2025</td><td class="tc">11</td><td class="tc ka">5</td><td class="tc"><span class="pill pa">45%</span></td><td class="tc">0</td><td class="tc">1</td><td class="tc">5</td></tr>
+        <tr><td>דצמבר 2025</td><td class="tc">14</td><td class="tc ka">6</td><td class="tc"><span class="pill pa">43%</span></td><td class="tc">1</td><td class="tc">1</td><td class="tc">6</td></tr>
+        <tr style="background:rgba(239,68,68,.05)"><td>ינואר 2026</td><td class="tc">12</td><td class="tc kr">3</td><td class="tc"><span class="pill pr">25%</span></td><td class="tc">2</td><td class="tc">3</td><td class="tc kr">4</td></tr>
+        <tr style="background:rgba(239,68,68,.05)"><td>פברואר 2026</td><td class="tc">21</td><td class="tc kr">6</td><td class="tc"><span class="pill pr">29%</span></td><td class="tc">4</td><td class="tc">2</td><td class="tc kr">9</td></tr>
+        <tr style="background:rgba(239,68,68,.08)"><td><strong>מרץ 2026</strong></td><td class="tc">21</td><td class="tc kr">3</td><td class="tc"><span class="pill pr">14%</span></td><td class="tc">6</td><td class="tc">2</td><td class="tc kr">10</td></tr>
+        <tr style="background:rgba(239,68,68,.05)"><td>אפריל 2026</td><td class="tc">15</td><td class="tc kr">5</td><td class="tc"><span class="pill pr">33%</span></td><td class="tc">4</td><td class="tc">0</td><td class="tc kr">6</td></tr>
+        <tr style="background:rgba(239,68,68,.08)"><td><strong>מאי 2026</strong></td><td class="tc">15</td><td class="tc kr">2</td><td class="tc"><span class="pill pr">13%</span></td><td class="tc">0</td><td class="tc">2</td><td class="tc kr">11</td></tr>
+      </tbody>
+      <tfoot><tr><td><strong>סה"כ</strong></td><td class="tc">158</td><td class="tc kg">65</td><td class="tc"><span class="pill pg">41%</span></td><td class="tc">17</td><td class="tc">12</td><td class="tc kr">64</td></tr></tfoot>
+    </table>
+    <div class="danger">⚠️ ירידה חדה ב-2026: מ-75–100% ל-13–33%. 64 לא חזרו = ~₪290,000 פוטנציאל שנה.</div>
+  </div>
+</div>
+
+<!-- CLIENTS -->
+<div id="p-clients" class="page">
+  <div class="g4">
+    <div class="kpi"><div class="kl">👥 פעילים</div><div class="kv">324</div><div class="ks">15.06.26</div></div>
+    <div class="kpi"><div class="kl">🏪 Boostapp</div><div class="kv kg">234</div><div class="ks">72%</div></div>
+    <div class="kpi"><div class="kl">🌐 Move</div><div class="kv kb">88</div><div class="ks">27%</div></div>
+    <div class="kpi"><div class="kl">⚠️ לא הגיעו 30+</div><div class="kv kr">131</div><div class="ks">40%</div></div>
+  </div>
+  <div class="g2">
+    <div class="card">
+      <div class="ct">⏱️ ותק לקוחות</div>
+      <div class="br"><span class="bl2">0–3 חודשים (חדשות)</span><div class="bt"><div class="bf" style="width:30%;background:var(--bl)"></div></div><span class="bv kb">97 (30%)</span></div>
+      <div class="br"><span class="bl2">3–12 חודשים (ליבה)</span><div class="bt"><div class="bf" style="width:49%;background:var(--gr)"></div></div><span class="bv kg">158 (49%)</span></div>
+      <div class="br"><span class="bl2">מעל שנה (נאמנות)</span><div class="bt"><div class="bf" style="width:21%;background:var(--pu)"></div></div><span class="bv" style="color:var(--pu)">69 (21%)</span></div>
+    </div>
+    <div class="card">
+      <div class="ct">📍 מקור הגעה</div>
+      <div class="br"><span class="bl2">Boostapp / ישיר</span><div class="bt"><div class="bf" style="width:72%;background:var(--gr)"></div></div><span class="bv kg">234 (72%)</span></div>
+      <div class="br"><span class="bl2">Move</span><div class="bt"><div class="bf" style="width:27%;background:var(--bl)"></div></div><span class="bv kb">88 (27%)</span></div>
+      <div class="br"><span class="bl2">אחר</span><div class="bt"><div class="bf" style="width:1%;background:var(--am)"></div></div><span class="bv ka">2 (1%)</span></div>
+    </div>
+  </div>
+  <div class="danger">⚠️ 131 לא הגיעו 30+ יום = 40% מהבסיס. שווה קמפיין שימור ממוקד.</div>
+</div>
+
+<!-- MOVEMENT -->
+<div id="p-mov" class="page">
+  <div class="g4">
+    <div class="kpi"><div class="kl">📈 גידול Move</div><div class="kv kg">×20</div><div class="ks">ספטמבר → מאי</div></div>
+    <div class="kpi"><div class="kl">💰 Move סה"כ</div><div class="kv kb">₪44,995</div><div class="ks">9 חודשים</div></div>
+    <div class="kpi"><div class="kl">💰 Freefit סה"כ</div><div class="kv" style="color:var(--pu)">₪18,605</div><div class="ks">8 חודשים</div></div>
+    <div class="kpi"><div class="kl">🤝 לקוחות Move</div><div class="kv">88</div><div class="ks">27% מהבסיס</div></div>
+  </div>
+  <div class="card">
+    <div class="ct">📋 מובמנט לפי חודש</div>
+    <table>
+      <thead><tr><th>חודש</th><th class="tc">Move כניסות</th><th class="tc">Move ₪</th><th class="tc">Freefit ₪</th><th class="tc">סה"כ מובמנט</th><th class="tc">מגמה</th></tr></thead>
+      <tbody>
+        <tr><td>ספטמבר 2025</td><td class="tc">17</td><td class="tc">₪665</td><td class="tc">—</td><td class="tc"><strong>₪665</strong></td><td class="tc">—</td></tr>
+        <tr><td>אוקטובר 2025</td><td class="tc">39</td><td class="tc">₪1,545</td><td class="tc">₪250</td><td class="tc"><strong>₪1,795</strong></td><td class="tc kg">▲170%</td></tr>
+        <tr><td>נובמבר 2025</td><td class="tc">67</td><td class="tc">₪2,695</td><td class="tc">₪600</td><td class="tc"><strong>₪3,295</strong></td><td class="tc kg">▲84%</td></tr>
+        <tr><td>דצמבר 2025</td><td class="tc">99</td><td class="tc">₪3,975</td><td class="tc">₪1,190</td><td class="tc"><strong>₪5,165</strong></td><td class="tc kg">▲57%</td></tr>
+        <tr><td>ינואר 2026</td><td class="tc">149</td><td class="tc">₪5,810</td><td class="tc">₪1,780</td><td class="tc"><strong>₪7,590</strong></td><td class="tc kg">▲47%</td></tr>
+        <tr><td>פברואר 2026</td><td class="tc">132</td><td class="tc">₪5,150</td><td class="tc">₪2,090</td><td class="tc"><strong>₪7,240</strong></td><td class="tc kr">▼5%</td></tr>
+        <tr><td>מרץ 2026</td><td class="tc">192</td><td class="tc">₪7,150</td><td class="tc">₪4,305</td><td class="tc"><strong>₪11,455</strong></td><td class="tc kg">▲58%</td></tr>
+        <tr><td>אפריל 2026</td><td class="tc">231</td><td class="tc">₪9,305</td><td class="tc">₪4,455</td><td class="tc"><strong>₪13,760</strong></td><td class="tc kg">▲20%</td></tr>
+        <tr><td>מאי 2026</td><td class="tc">240</td><td class="tc">₪9,360</td><td class="tc">₪3,935</td><td class="tc"><strong>₪13,295</strong></td><td class="tc kr">▼3%</td></tr>
+      </tbody>
+      <tfoot><tr><td><strong>סה"כ</strong></td><td class="tc"><strong>1,166</strong></td><td class="tc"><strong>₪44,995</strong></td><td class="tc"><strong>₪18,605</strong></td><td class="tc"><strong>₪63,600</strong></td><td></td></tr></tfoot>
+    </table>
+    <div class="insight">💡 כל 10 לקוחות Move שמומרות למנוי ישיר = +₪4,500–5,000/חודש.</div>
+  </div>
+</div>
+
+<!-- LEADS -->
+<div id="p-leads" class="page">
+  <div class="g4">
+    <div class="kpi"><div class="kl">📬 סה"כ לידים</div><div class="kv">746</div><div class="ks">יול 2025 – יונ 2026</div></div>
+    <div class="kpi"><div class="kl">📘 פייסבוק</div><div class="kv kb">515</div><div class="ks">69%</div></div>
+    <div class="kpi"><div class="kl">🌐 Move</div><div class="kv" style="color:var(--pu)">172</div><div class="ks">23%</div></div>
+    <div class="kpi"><div class="kl">❓ אחר</div><div class="kv" style="color:var(--tx2)">59</div><div class="ks">8%</div></div>
+  </div>
+  <div class="card">
+    <div class="ct">📋 לידים לפי חודש</div>
+    <table>
+      <thead><tr><th>חודש</th><th class="tc">פייסבוק</th><th class="tc">Move</th><th class="tc">אחר</th><th class="tc">סה"כ</th></tr></thead>
+      <tbody>
+        <tr><td>יולי 2025</td><td class="tc">27</td><td class="tc">0</td><td class="tc">0</td><td class="tc"><strong>27</strong></td></tr>
+        <tr><td>אוגוסט 2025</td><td class="tc">29</td><td class="tc">2</td><td class="tc">55</td><td class="tc"><strong kg"="" style="color:var(--gr)">86 ⭐</strong></td></tr>
+        <tr><td>ספטמבר 2025</td><td class="tc">26</td><td class="tc">3</td><td class="tc">1</td><td class="tc"><strong>30</strong></td></tr>
+        <tr><td>אוקטובר 2025</td><td class="tc">13</td><td class="tc">12</td><td class="tc">3</td><td class="tc"><strong>28</strong></td></tr>
+        <tr><td>נובמבר 2025</td><td class="tc">12</td><td class="tc">7</td><td class="tc">0</td><td class="tc"><strong>19</strong></td></tr>
+        <tr><td>דצמבר 2025</td><td class="tc">35</td><td class="tc">5</td><td class="tc">0</td><td class="tc"><strong>40</strong></td></tr>
+        <tr><td>ינואר 2026</td><td class="tc">24</td><td class="tc">11</td><td class="tc">0</td><td class="tc"><strong>35</strong></td></tr>
+        <tr><td>פברואר 2026</td><td class="tc">10</td><td class="tc">7</td><td class="tc">0</td><td class="tc"><strong>17</strong></td></tr>
+        <tr><td>מרץ 2026</td><td class="tc">19</td><td class="tc">42</td><td class="tc">0</td><td class="tc"><strong>61</strong></td></tr>
+        <tr><td>אפריל 2026</td><td class="tc">37</td><td class="tc">36</td><td class="tc">0</td><td class="tc"><strong>73</strong></td></tr>
+        <tr><td>מאי 2026</td><td class="tc">14</td><td class="tc">34</td><td class="tc">0</td><td class="tc"><strong>48</strong></td></tr>
+        <tr><td>יוני 2026 (חלקי)</td><td class="tc">0</td><td class="tc">13</td><td class="tc">0</td><td class="tc"><strong>13</strong></td></tr>
+      </tbody>
+      <tfoot><tr><td><strong>סה"כ</strong></td><td class="tc">515</td><td class="tc">172</td><td class="tc">59</td><td class="tc"><strong>746</strong></td></tr></tfoot>
+    </table>
+  </div>
+</div>
+
+<!-- OCCUPANCY -->
+<div id="p-occ" class="page">
+  <div class="g3">
+    <div class="kpi"><div class="kl">👤 אור שמואלי</div><div class="kv kg">54.3%</div><div class="ks">312 שיעורים</div></div>
+    <div class="kpi"><div class="kl">👤 יובל נידם</div><div class="kv ka">46.1%</div><div class="ks">161 שיעורים</div></div>
+    <div class="kpi"><div class="kl">👤 שיר דרייפוס</div><div class="kv ka">41.2%</div><div class="ks">16 שיעורים</div></div>
+  </div>
+  <div class="card">
+    <div class="ct">⏰ תפוסה לפי שעה</div>
+    <div class="br"><span class="bl2">18:30 <span class="pill pg">שיא</span></span><div class="bt"><div class="bf" style="width:100%;background:var(--gr)"></div></div><span class="bv kg">70.4% (49)</span></div>
+    <div class="br"><span class="bl2">18:00</span><div class="bt"><div class="bf" style="width:95%;background:var(--gr)"></div></div><span class="bv kg">66.9% (74)</span></div>
+    <div class="br"><span class="bl2">10:00</span><div class="bt"><div class="bf" style="width:84%;background:#22c55e99"></div></div><span class="bv">58.9% (53)</span></div>
+    <div class="br"><span class="bl2">09:00</span><div class="bt"><div class="bf" style="width:77%;background:#22c55e77"></div></div><span class="bv">54.2% (73)</span></div>
+    <div class="br"><span class="bl2">08:00</span><div class="bt"><div class="bf" style="width:68%;background:var(--am)"></div></div><span class="bv ka">48.1% (26)</span></div>
+    <div class="br"><span class="bl2">19:30</span><div class="bt"><div class="bf" style="width:57%;background:var(--am)"></div></div><span class="bv ka">39.8% (43)</span></div>
+    <div class="br"><span class="bl2">19:00 <span class="pill pr">נמוך</span></span><div class="bt"><div class="bf" style="width:55%;background:var(--rd)"></div></div><span class="bv kr">38.6% (71)</span></div>
+    <div class="br"><span class="bl2">20:00 <span class="pill pr">נמוך</span></span><div class="bt"><div class="bf" style="width:53%;background:var(--rd)"></div></div><span class="bv kr">37.5% (56)</span></div>
+    <div class="br"><span class="bl2">20:30</span><div class="bt"><div class="bf" style="width:44%;background:#ef444488"></div></div><span class="bv kr">31.0% (16)</span></div>
+    <div class="warn">⚡ שעות 19:00–20:30 = 130+ שיעורים עם 31–39% תפוסה. הזדמנות צמיחה.</div>
+  </div>
+</div>
+
+<!-- PROFIT -->
+<div id="p-profit" class="page">
+  <div class="g4">
+    <div class="kpi"><div class="kl">📈 הכנסה ינ–אפר 2026</div><div class="kv kg">₪209,429</div><div class="ks">4 חודשים</div></div>
+    <div class="kpi"><div class="kl">📉 הוצאות</div><div class="kv kr">₪51,963</div><div class="ks">כולל מע"מ</div></div>
+    <div class="kpi"><div class="kl">💚 רווח</div><div class="kv kg">₪157,466</div><div class="ks">75% מרג'</div></div>
+    <div class="kpi"><div class="kl">📊 ממוצע חודשי</div><div class="kv">₪52,357</div><div class="ks">הכנסה</div></div>
+  </div>
+  <div class="card">
+    <div class="ct">💰 הכנסה מול הוצאות 2026</div>
+    <table>
+      <thead><tr><th>תקופה</th><th class="tc">הכנסה</th><th class="tc">הוצאות</th><th class="tc">רווח</th><th class="tc">מרג'</th></tr></thead>
+      <tbody>
+        <tr><td>ינואר+פברואר 2026</td><td class="tc">₪92,510</td><td class="tc kr">₪28,809</td><td class="tc kg">₪63,701</td><td class="tc"><span class="pill pg">69%</span></td></tr>
+        <tr><td>מרץ+אפריל 2026</td><td class="tc">₪116,919</td><td class="tc kr">₪23,154</td><td class="tc kg">₪93,765</td><td class="tc"><span class="pill pg">80%</span></td></tr>
+      </tbody>
+      <tfoot><tr><td><strong>סה"כ ינ–אפר 2026</strong></td><td class="tc">₪209,429</td><td class="tc kr">₪51,963</td><td class="tc kg">₪157,466</td><td class="tc"><span class="pill pg">75%</span></td></tr></tfoot>
+    </table>
+  </div>
+  <div class="card">
+    <div class="ct">📊 הוצאות עיקריות — ינ–אפר 2026</div>
+    <div class="br"><span class="bl2">שכירות</span><div class="bt"><div class="bf" style="width:100%;background:var(--rd)"></div></div><span class="bv kr">₪23,678</span></div>
+    <div class="br"><span class="bl2">שכר מאמנות</span><div class="bt"><div class="bf" style="width:72%;background:#ef444499"></div></div><span class="bv">₪17,010</span></div>
+    <div class="br"><span class="bl2">ארנונה</span><div class="bt"><div class="bf" style="width:60%;background:var(--am)"></div></div><span class="bv ka">₪14,331</span></div>
+    <div class="br"><span class="bl2">מודעות פייסבוק</span><div class="bt"><div class="bf" style="width:41%;background:var(--bl)"></div></div><span class="bv kb">₪9,814</span></div>
+    <div class="br"><span class="bl2">ליווי עסקי</span><div class="bt"><div class="bf" style="width:32%;background:var(--pu)"></div></div><span class="bv">₪7,670</span></div>
+    <div class="br"><span class="bl2">קמפיינר</span><div class="bt"><div class="bf" style="width:24%;background:var(--pu)"></div></div><span class="bv">₪5,664</span></div>
+    <div class="br"><span class="bl2">אפליקציה</span><div class="bt"><div class="bf" style="width:12%;background:var(--tx3)"></div></div><span class="bv">₪2,800</span></div>
+  </div>
+</div>
+
+</main>
+<script>
+const REV=[
+  {m:'ינואר 2025',y:2025,manual:3235,boost:22300,movff:0},
+  {m:'פברואר 2025',y:2025,manual:11250,boost:24248,movff:0},
+  {m:'מרץ 2025',y:2025,manual:5615,boost:27885,movff:0},
+  {m:'אפריל 2025',y:2025,manual:9700,boost:25300,movff:0},
+  {m:'מאי 2025',y:2025,manual:8400,boost:29000,movff:0},
+  {m:'יוני 2025',y:2025,manual:5400,boost:24535,movff:0},
+  {m:'יולי 2025',y:2025,manual:8690,boost:25590,movff:0},
+  {m:'אוגוסט 2025',y:2025,manual:9210,boost:21850,movff:0},
+  {m:'ספטמבר 2025',y:2025,manual:3250,boost:20570,movff:0},
+  {m:'אוקטובר 2025',y:2025,manual:6710,boost:20325,movff:1795},
+  {m:'נובמבר 2025',y:2025,manual:9370,boost:27240,movff:3295},
+  {m:'דצמבר 2025',y:2025,manual:9795,boost:21770,movff:5165},
+  {m:'ינואר 2026',y:2026,manual:15230,boost:21930,movff:7590},
+  {m:'פברואר 2026',y:2026,manual:12510,boost:28010,movff:7240},
+  {m:'מרץ 2026',y:2026,manual:14515,boost:26214,movff:11455},
+  {m:'אפריל 2026',y:2026,manual:18710,boost:32265,movff:13760},
+  {m:'מאי 2026',y:2026,manual:16545,boost:31470,movff:13295},
+];
+
+const SUBS={
+  months:['2025-01','2025-02','2025-03','2025-04','2025-05','2025-06','2025-07','2025-08','2025-09','2025-10','2025-11','2025-12','2026-01','2026-02','2026-03','2026-04','2026-05'],
+  cats:['מנוי 2×/שבוע','מנוי חופשי 3+','מנוי 3×/שבוע','מנוי 1×/שבוע','כרטיסייה 10 אישי','כרטיסייה 10 קבוצתי','אישי בודד','היכרות','אחר'],
+  data:{
+    'מנוי 2×/שבוע':     [7900,9750,9800,12700,12700,12700,12700,10965,9950,10595,12610,12465,8850,12065,8320,10805,13710],
+    'מנוי חופשי 3+':    [6950,7000,8200,6450,5900,5300,5300,5150,4700,4100,2670,2250,2250,2850,2250,2250,2250],
+    'מנוי 3×/שבוע':     [1100,1650,1650,2750,2700,2150,1100,1550,1550,550,3600,4650,4650,6080,4750,5750,5700],
+    'מנוי 1×/שבוע':     [900,600,600,900,900,600,900,550,600,600,1600,1050,1300,2550,2550,2125,2550],
+    'כרטיסייה 10 אישי': [9500,8000,5500,7500,8200,2500,10700,7100,5600,0,7400,0,4800,2600,7550,2200,3000],
+    'כרטיסייה 10 קבוצתי':[2500,1150,2550,0,1600,2050,1700,0,0,2400,1315,1600,0,0,0,0,0],
+    'אישי בודד':         [1900,250,700,0,250,500,750,580,0,400,660,0,280,0,1980,2340,3600],
+    'היכרות':            [1150,650,1200,500,300,0,1500,600,450,950,1350,280,240,420,510,300,300],
+    'אחר':               [0,0,0,0,0,85,0,450,0,200,200,0,685,2590,845,120,0],
+  },
+  totals:{'מנוי 2×/שבוע':188585,'מנוי חופשי 3+':75820,'מנוי 3×/שבוע':51930,'מנוי 1×/שבוע':20875,'כרטיסייה 10 אישי':92150,'כרטיסייה 10 קבוצתי':16865,'אישי בודד':14190,'היכרות':10700,'אחר':5175},
+  counts:{'מנוי 2×/שבוע':415,'מנוי חופשי 3+':131,'מנוי 3×/שבוע':99,'מנוי 1×/שבוע':77,'כרטיסייה 10 אישי':36,'כרטיסייה 10 קבוצתי':62,'אישי בודד':103,'היכרות':154,'אחר':25},
+};
+
+let revP='all', subP='all';
+const fmt=n=>'₪'+Math.round(n).toLocaleString('he-IL');
+const pct=(a,b)=>b>0?Math.round(a/b*100):0;
+
+function rp(p,btn){revP=p;document.querySelectorAll('#p-rev .qb').forEach(b=>b.classList.remove('on'));btn.classList.add('on');renderRev();}
+function sp(p,btn){subP=p;document.querySelectorAll('#p-subs .qb').forEach(b=>b.classList.remove('on'));btn.classList.add('on');renderSubs();}
+
+function renderRev(){
+  const src=document.getElementById('rsrc').value;
+  let d=REV;
+  if(revP==='2025') d=d.filter(x=>x.y===2025);
+  if(revP==='2026') d=d.filter(x=>x.y===2026);
+  let tM=0,tB=0,tMF=0;
+  d.forEach(r=>{tM+=r.manual;tB+=r.boost;tMF+=r.movff;});
+  const tAll=tM+tB;
+  const show=r=>src==='boost'?r.boost:src==='manual'?r.manual:r.manual+r.boost;
+  const kT=src==='boost'?tB:src==='manual'?tM:tAll;
+  const avg=Math.round(kT/d.length);
+  const best=d.reduce((a,b)=>show(a)>show(b)?a:b,d[0]);
+  document.getElementById('r-kpis').innerHTML=`
+    <div class="kpi"><div class="kl">💰 סה"כ תקופה</div><div class="kv">${fmt(kT)}</div><div class="ks">${d.length} חודשים</div></div>
+    <div class="kpi"><div class="kl">📅 ממוצע חודשי</div><div class="kv">${fmt(avg)}</div><div class="ks">לחודש</div></div>
+    <div class="kpi"><div class="kl">⭐ חודש שיא</div><div class="kv kg" style="font-size:15px">${best.m}</div><div class="ks">${fmt(show(best))}</div></div>
+    <div class="kpi"><div class="kl">🏪 Boostapp %</div><div class="kv">${pct(tB,tAll)}%</div><div class="ks">מסה"כ</div></div>`;
+  let rows='',prev=0;
+  d.forEach(r=>{
+    const s=show(r);
+    const arr=prev>0?(s>prev?`<span class="kg" style="font-size:10px">▲${pct(s-prev,prev)}%</span>`:`<span class="kr" style="font-size:10px">▼${pct(prev-s,prev)}%</span>`):'—';
+    rows+=`<tr><td>${r.m}</td><td class="tc">${src==='boost'?'—':fmt(r.manual)}</td><td class="tc">${src!=='all'?'—':(r.movff?fmt(r.movff):'—')}</td><td class="tc">${src==='manual'?'—':fmt(r.boost)}</td><td class="tc"><strong>${fmt(s)}</strong></td><td class="tc">${arr}</td></tr>`;
+    prev=s;
+  });
+  document.getElementById('r-tbody').innerHTML=rows;
+  document.getElementById('r-tfoot').innerHTML=`<tr><td><strong>סה"כ</strong></td><td class="tc">${src==='boost'?'—':fmt(tM)}</td><td class="tc">${src!=='all'?'—':fmt(tMF)}</td><td class="tc">${src==='manual'?'—':fmt(tB)}</td><td class="tc">${fmt(kT)}</td><td></td></tr>`;
+  const mx=Math.max(tM,tB)||1;
+  document.getElementById('r-bars').innerHTML=`
+    <div class="br"><span class="bl2">ידני (כולל מוב+פריפיט)</span><div class="bt"><div class="bf" style="width:${pct(tM,mx)}%;background:var(--bl)"></div></div><span class="bv kb">${fmt(tM)} (${pct(tM,tAll)}%)</span></div>
+    <div class="br"><span class="bl2">Boostapp</span><div class="bt"><div class="bf" style="width:${pct(tB,mx)}%;background:var(--gr)"></div></div><span class="bv kg">${fmt(tB)} (${pct(tB,tAll)}%)</span></div>
+    <div class="br"><span class="bl2">מוב+פריפיט (מתוך ידני)</span><div class="bt"><div class="bf" style="width:${pct(tMF,mx)}%;background:var(--pu);opacity:.7"></div></div><span class="bv" style="color:var(--pu)">${fmt(tMF)} (תת-פירוט)</span></div>`;
+  document.getElementById('r-insight').innerHTML=`💡 <strong>חודש שיא: ${best.m} (${fmt(show(best))}).</strong> ממוצע: ${fmt(avg)}/חודש. Boostapp = ${pct(tB,tAll)}%. מוב+פריפיט (${fmt(tMF)}) כלולים בסכום הידני.`;
+}
+
+function renderSubs(){
+  const stype=document.getElementById('stype').value;
+  const cats=stype==='all'?SUBS.cats:[stype];
+  const months=subP==='2025'?SUBS.months.filter(m=>m.startsWith('2025')):subP==='2026'?SUBS.months.filter(m=>m.startsWith('2026')):SUBS.months;
+  const mIdx=months.map(m=>SUBS.months.indexOf(m));
+
+  // KPIs
+  let totalRev=0,totalCnt=0;
+  cats.forEach(c=>{
+    totalRev+=SUBS.totals[c]||0;
+    totalCnt+=SUBS.counts[c]||0;
+  });
+  const topCat=cats.reduce((a,b)=>(SUBS.totals[b]||0)>(SUBS.totals[a]||0)?b:a,cats[0]);
+  document.getElementById('sub-kpis').innerHTML=`
+    <div class="kpi"><div class="kl">💰 הכנסה סה"כ</div><div class="kv">${fmt(totalRev)}</div><div class="ks">לפי הפילטר</div></div>
+    <div class="kpi"><div class="kl">🎫 מכירות</div><div class="kv">${totalCnt}</div><div class="ks">עסקאות</div></div>
+    <div class="kpi"><div class="kl">💎 מנוי מוביל</div><div class="kv kg" style="font-size:13px">${topCat}</div><div class="ks">${fmt(SUBS.totals[topCat]||0)}</div></div>
+    <div class="kpi"><div class="kl">📊 ממוצע לעסקה</div><div class="kv">${totalCnt>0?fmt(totalRev/totalCnt):'—'}</div><div class="ks">לכל מכירה</div></div>`;
+
+  // Bars
+  const mx=Math.max(...cats.map(c=>SUBS.totals[c]||0))||1;
+  const colors={'מנוי 2×/שבוע':'var(--gr)','מנוי חופשי 3+':'var(--bl)','מנוי 3×/שבוע':'var(--pu)','מנוי 1×/שבוע':'var(--am)','כרטיסייה 10 אישי':'#06b6d4','כרטיסייה 10 קבוצתי':'#f97316','אישי בודד':'#ec4899','היכרות':'#84cc16','אחר':'var(--tx3)'};
+  document.getElementById('sub-bars').innerHTML=cats.map(c=>`
+    <div class="br"><span class="bl2">${c}</span><div class="bt"><div class="bf" style="width:${pct(SUBS.totals[c]||0,mx)}%;background:${colors[c]||'var(--tx2)'}"></div></div>
+    <span class="bv" style="color:${colors[c]||'var(--tx2)'}">${fmt(SUBS.totals[c]||0)} (${SUBS.counts[c]||0} מכירות)</span></div>`).join('');
+
+  // Table
+  const mLabel=m=>{'2025-01':'ינואר 25','2025-02':'פברואר 25','2025-03':'מרץ 25','2025-04':'אפריל 25','2025-05':'מאי 25','2025-06':'יוני 25','2025-07':'יולי 25','2025-08':'אוגוסט 25','2025-09':'ספטמבר 25','2025-10':'אוקטובר 25','2025-11':'נובמבר 25','2025-12':'דצמבר 25','2026-01':'ינואר 26','2026-02':'פברואר 26','2026-03':'מרץ 26','2026-04':'אפריל 26','2026-05':'מאי 26'}[m]||m;return mLabel(m)};
+  document.getElementById('sub-thead').innerHTML=`<tr><th>חודש</th>${cats.map(c=>`<th class="tc" style="font-size:10px">${c}</th>`).join('')}<th class="tc">סה"כ</th></tr>`;
+  let rows='';
+  months.forEach((m,i)=>{
+    const idx=mIdx[i];
+    const vals=cats.map(c=>(SUBS.data[c]||[])[idx]||0);
+    const tot=vals.reduce((a,b)=>a+b,0);
+    rows+=`<tr><td style="white-space:nowrap;font-size:11px">${mLabel(m)}</td>${vals.map((v,j)=>`<td class="tc">${v>0?fmt(v):'—'}</td>`).join('')}<td class="tc"><strong>${tot>0?fmt(tot):'—'}</strong></td></tr>`;
+  });
+  document.getElementById('sub-tbody').innerHTML=rows;
+  const totRow=cats.map(c=>{const s=mIdx.reduce((a,idx)=>a+((SUBS.data[c]||[])[idx]||0),0);return fmt(s);});
+  const grandTot=cats.reduce((a,c)=>a+mIdx.reduce((b,idx)=>b+((SUBS.data[c]||[])[idx]||0),0),0);
+  document.getElementById('sub-tfoot').innerHTML=`<tr><td><strong>סה"כ</strong></td>${totRow.map(v=>`<td class="tc">${v}</td>`).join('')}<td class="tc"><strong>${fmt(grandTot)}</strong></td></tr>`;
+}
+
+function show(id,btn){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));
+  btn.classList.add('on');
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('on'));
+  document.getElementById('p-'+id).classList.add('on');
+}
+
+renderRev();
+renderSubs();
+</script>
+
+
+</body></html>
